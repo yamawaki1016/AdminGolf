@@ -2,41 +2,39 @@
   <div class="admin-top">
     <div class="topTimer">{{ currentTime }}</div>
     <div class="reservation mb-16">
-      <SquareBlock class="mr-8" id="today">
+      <SquareBlock class="mr-8" id="today" @click="gotoDayReserve()">
         <template v-slot:body> 本日の予約 </template>
       </SquareBlock>
-      <SquareBlock class="ml-8" id="weekly">
+      <SquareBlock class="ml-8" id="weekly" :colorType="1">
         <template v-slot:body> 今週の予約 </template>
       </SquareBlock>
     </div>
     <div class="flex mg-16">
       <div class="customer mb-16 mr-8">
-        <SquareBlock class="mr-8 w-50" id="addCustomer">
+        <SquareBlock class="mr-8 w-50" id="addCustomer" @click="gotoUserInfo()">
           <template v-slot:body> 顧客新規登録 </template>
         </SquareBlock>
-        <SquareBlock class="ml-8 w-50" id="customerList">
+        <SquareBlock class="ml-8 w-50" id="customerList" :colorType="1">
           <template v-slot:body> 顧客一覧 </template>
         </SquareBlock>
       </div>
       <div class="lesten mb-16 ml-8">
-        <SquareBlock class="mr-8 w-50" id="addLesten">
+        <SquareBlock class="mr-8 w-50" id="addLesten" :colorType="1">
           <template v-slot:body> レッスン新規登録 </template>
         </SquareBlock>
-        <SquareBlock class="ml-8 w-50" id="lestenList">
+        <SquareBlock class="ml-8 w-50" id="lestenList" :colorType="1">
           <template v-slot:body> レッスン一覧 </template>
         </SquareBlock>
       </div>
     </div>
-    <SquareBotton class="ok-botton" title="登録" />
   </div>
 </template>
 <script>
 import SquareBlock from "@/components/SquareBlock.vue";
-import SquareBotton from "@/components/SquareBotton.vue";
 import util from "@/mixin/util.js";
 export default {
   name: "AdminTop",
-  components: { SquareBlock, SquareBotton },
+  components: { SquareBlock },
   data() {
     return {
       currentTime: "",
@@ -50,11 +48,11 @@ export default {
     let timeID = setInterval(this.getcurrentTime, 1000);
   },
   methods: {
-    gotoAdmin() {
-      this.$router.push("UserInfo");
+    gotoDayReserve() {
+      this.$router.push("/dayReserve");
     },
-    gotoAdminDayReserve() {
-      this.$router.push("DayReserve");
+    gotoUserInfo() {
+      this.$router.push("/userInfo");
     },
     getcurrentTime() {
       this.currentTime = this.formatDate(new Date());

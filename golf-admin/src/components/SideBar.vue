@@ -14,7 +14,7 @@
     <div class="bar-block">
       <div class="bar-title">顧客</div>
       <div class="bar-contents-list">
-        <div class="bar-contents">顧客情報新規登録</div>
+        <div class="bar-contents" @click="gotoUserInfo()">顧客情報新規登録</div>
         <div class="bar-contents">顧客一覧</div>
       </div>
     </div>
@@ -38,6 +38,9 @@ export default {
     },
     gotoDayReserve() {
       this.$router.push("/dayReserve");
+    },
+    gotoUserInfo() {
+      this.$router.push("/userInfo");
     },
   },
 };

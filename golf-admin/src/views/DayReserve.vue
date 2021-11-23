@@ -134,9 +134,6 @@ export default {
     },
   },
   methods: {
-    gotoAdminUserInfo() {
-      this.$router.push("UserInfo");
-    },
     addLestenInfoModal(info) {
       this.selectedUserInfo = info;
       this.modalFlg = true;

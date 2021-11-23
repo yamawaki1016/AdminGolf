@@ -1,9 +1,5 @@
 <template>
   <div class="adminTop">
-    <div class="bar">
-      <div class="bar-title">ユーザー情報画面</div>
-      <div @click="gotoAdminDayReserve()">予約画面に戻る</div>
-    </div>
     <div class="user-info">
       <div class="name">
         <div class="user-info-title">氏名</div>
@@ -66,23 +62,7 @@ export default {
 </script>
 <style scoped>
 .adminTop {
-  margin: 100px 0;
-}
-.bar {
-  height: 40px;
-  background-color: rgb(201, 201, 201);
-  text-align: center;
-  /* color: white; */
-  font-weight: bold;
-  vertical-align: middle;
-}
-.bar-title {
-  display: inline-block;
-  height: 100%;
-  text-align: center;
-  /* color: white; */
-  font-weight: bold;
-  vertical-align: middle;
+  margin: 50px 0;
 }
 .user-info {
   margin: 50px 50px;
