@@ -1,12 +1,22 @@
 <template>
-  <div id="nav">
-    <main>
+  <div class="admin-app">
+    <Header class="header" />
+    <main class="main">
+      <SideBar class="sidebar" />
       <router-view />
     </main>
   </div>
 </template>
 <script>
-export default {};
+import Header from "./components/Header.vue";
+import SideBar from "./components/SideBar.vue";
+export default {
+  name: "App",
+  components: {
+    Header,
+    SideBar,
+  },
+};
 </script>
 
 <style>
@@ -17,18 +27,12 @@ export default {};
   text-align: center;
   color: #2c3e50;
 }
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+.admin-app {
+  display: flex;
+  flex-flow: column;
+  width: 100vw;
+  /* float: left; */
+  /* position: fixed; */
 }
 /* .header {
   // height: 10vh;
@@ -40,9 +44,14 @@ export default {};
   width: 100%;
 } */
 .main {
-  /* flex: 1; */
+  display: flex;
+  width: 100vw;
   background-color: #fff;
   overflow: hidden;
+}
+.sidebar {
+  width: 180px;
+  height: 100vh;
 }
 /** ------------------------------------- */
 html,
@@ -158,6 +167,9 @@ li {
 .fs-48 {
   font-size: 48px;
 }
+.mg-16 {
+  margin: 16px;
+}
 .mg-section {
   margin: 48px 48px;
 }
@@ -199,6 +211,9 @@ li {
 }
 .mrl-48px {
   margin: 0 48px;
+}
+.w-50 {
+  width: 50%;
 }
 .w-100 {
   width: 100%;
