@@ -1,11 +1,13 @@
 <template>
   <div class="side-bar-contents">
     <div class="bold">管理者メニュー</div>
-    <div>トップ画面</div>
+    <div @click="gotoTop()">トップ画面</div>
     <div class="bar-block">
       <div class="bar-title">予約</div>
       <div class="bar-contents-list">
-        <div class="bar-contents">当日のレッスン予約</div>
+        <div class="bar-contents" @click="gotoDayReserve()">
+          当日のレッスン予約
+        </div>
         <div class="bar-contents">今週のレッスン予約</div>
       </div>
     </div>
@@ -30,7 +32,14 @@ export default {
   name: "SideBar",
   components: {},
   computed: {},
-  methods: {},
+  methods: {
+    gotoTop() {
+      this.$router.push("/");
+    },
+    gotoDayReserve() {
+      this.$router.push("/dayReserve");
+    },
+  },
 };
 </script>
 <style scoped>

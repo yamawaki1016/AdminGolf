@@ -1,8 +1,5 @@
 <template>
   <div class="adminTop">
-    <div class="bar">
-      <div class="bar-title">当日のレッスン予約画面</div>
-    </div>
     <div class="day-reserve">
       <div class="day-reserve-date">
         {{ getDay + "のご予約" }}
@@ -153,24 +150,9 @@ export default {
 </script>
 <style scoped>
 .adminTop {
-  margin: 100px 0;
+  margin: 50px 0;
 }
-.bar {
-  height: 40px;
-  background-color: rgb(201, 201, 201);
-  text-align: center;
-  /* color: white; */
-  font-weight: bold;
-  vertical-align: middle;
-}
-.bar-title {
-  display: inline-block;
-  height: 100%;
-  text-align: center;
-  /* color: white; */
-  font-weight: bold;
-  vertical-align: middle;
-}
+
 .day-reserve-date {
   margin: 32px 64px;
   text-align: center;

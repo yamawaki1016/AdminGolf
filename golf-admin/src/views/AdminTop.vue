@@ -35,7 +35,7 @@ import SquareBlock from "@/components/SquareBlock.vue";
 import SquareBotton from "@/components/SquareBotton.vue";
 import util from "@/mixin/util.js";
 export default {
-  name: "Top",
+  name: "AdminTop",
   components: { SquareBlock, SquareBotton },
   data() {
     return {
@@ -84,9 +84,8 @@ export default {
 </script>
 <style scoped>
 .admin-top {
-  width: 100%;
   height: 100%;
-  margin: 32px 32px 32px 228px;
+  margin: 32px 32px 32px 32px;
 }
 .topTimer {
   font-size: 32px;

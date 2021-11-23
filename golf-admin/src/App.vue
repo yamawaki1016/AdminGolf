@@ -3,7 +3,9 @@
     <Header class="header" />
     <main class="main">
       <SideBar class="sidebar" />
-      <router-view />
+      <div class="router">
+        <router-view />
+      </div>
     </main>
   </div>
 </template>
@@ -52,6 +54,11 @@ export default {
 .sidebar {
   width: 180px;
   height: 100vh;
+}
+.router {
+  margin-left: 204px;
+  position: relative;
+  width: 100%;
 }
 /** ------------------------------------- */
 html,
