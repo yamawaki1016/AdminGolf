@@ -38,13 +38,33 @@ export default createStore({
       }
       // 顧客リストに新規ユーザーを追加
       parsedCostomerList.push(costomerInfo);
-      console.log(parsedCostomerList);
       // ローカルストレージ更新
       localStorage.setItem(
         LOCAL_STORAGE_KEYS.costomerList,
         JSON.stringify(parsedCostomerList)
       );
       success();
+    },
+    /**
+     * 顧客一覧取得
+     * @param param0
+     * @param param1
+     */
+    getCostomerList({ state }, { success, error }) {
+      // TODO: 今後APIに処理を置き換え
+      // ローカルストレージから最新の顧客リストを取得
+      const costomerList = localStorage.getItem(
+        LOCAL_STORAGE_KEYS.costomerList
+      );
+      let parsedCostomerList;
+      if (costomerList) {
+        // 取得できた場合のみパース
+        parsedCostomerList = JSON.parse(costomerList);
+        success(parsedCostomerList);
+      } else {
+        // 取得できない場合は作成
+        error();
+      }
     },
   },
   modules: {},

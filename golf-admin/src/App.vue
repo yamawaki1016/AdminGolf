@@ -231,6 +231,9 @@ li {
 .mrl-48px {
   margin: 0 48px;
 }
+.w-20 {
+  width: 20%;
+}
 .w-50 {
   width: 50%;
 }
@@ -251,6 +254,14 @@ li {
 }
 .flex {
   display: flex;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flex-column {
+  flex-flow: column;
 }
 .table {
   display: table;
