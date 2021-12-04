@@ -180,6 +180,9 @@ li {
 .mg-section {
   margin: 48px 48px;
 }
+.mg-auto {
+  margin: auto;
+}
 .mt-16 {
   margin-top: 16px;
 }
@@ -188,6 +191,12 @@ li {
 }
 .mt-32 {
   margin-top: 32px;
+}
+.mt-48 {
+  margin-top: 48px;
+}
+.mt-64 {
+  margin-top: 64px;
 }
 .mb-16 {
   margin-bottom: 16px;
@@ -212,6 +221,9 @@ li {
 }
 .ml-64 {
   margin-left: 64px;
+}
+.pt-32 {
+  padding-top: 32px;
 }
 .pb-16 {
   padding-bottom: 16px;
@@ -239,6 +251,9 @@ li {
 }
 .flex {
   display: flex;
+}
+.table {
+  display: table;
 }
 .wrap {
   flex-wrap: wrap;

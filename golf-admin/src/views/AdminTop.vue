@@ -11,7 +11,11 @@
     </div>
     <div class="flex mg-16">
       <div class="customer mb-16 mr-8">
-        <SquareBlock class="mr-8 w-50" id="addCustomer" @click="gotoUserInfo()">
+        <SquareBlock
+          class="mr-8 w-50"
+          id="addCustomer"
+          @click="gotoCostomerRegistration()"
+        >
           <template v-slot:body> 顧客新規登録 </template>
         </SquareBlock>
         <SquareBlock class="ml-8 w-50" id="customerList" :colorType="1">
@@ -53,6 +57,9 @@ export default {
     },
     gotoUserInfo() {
       this.$router.push("/userInfo");
+    },
+    gotoCostomerRegistration() {
+      this.$router.push("/costomerRegistration");
     },
     getcurrentTime() {
       this.currentTime = this.formatDate(new Date());

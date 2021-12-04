@@ -49,5 +49,18 @@ export default {
       }
       return resWeek;
     },
+    setLocalStrage(key, value) {
+      localStorage.setItem(key, value);
+    },
+    getLocalStrage(key) {
+      const getItem = localStorage.getItem(key);
+      if (getItem) {
+        // 取得できた場合のみパース
+        return JSON.parse(getItem);
+      } else {
+        // 取得できない場合は作成
+        return [];
+      }
+    },
   },
 };

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import AdminTop from "../views/AdminTop.vue";
 import DayReserve from "../views/DayReserve.vue";
 import UserInfo from "../views/UserInfo.vue";
+import CostomerRegistration from "../views/CostomerRegistration.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +19,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/userInfo",
     name: "UserInfo",
     component: UserInfo,
+  },
+  {
+    path: "/costomerRegistration",
+    name: "CostomerRegistration",
+    component: CostomerRegistration,
   },
   {
     path: "/about",
