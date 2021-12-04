@@ -17,7 +17,7 @@
         <div class="bar-contents" @click="gotoCostomerRegistration()">
           顧客情報新規登録
         </div>
-        <div class="bar-contents">顧客一覧</div>
+        <div class="bar-contents" @click="gotoCostomerList()">顧客一覧</div>
       </div>
     </div>
     <div class="bar-block">
@@ -46,6 +46,9 @@ export default {
     },
     gotoCostomerRegistration() {
       this.$router.push("/costomerRegistration");
+    },
+    gotoCostomerList() {
+      this.$router.push("/costomerList");
     },
   },
 };

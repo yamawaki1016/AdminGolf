@@ -18,7 +18,11 @@
         >
           <template v-slot:body> 顧客新規登録 </template>
         </SquareBlock>
-        <SquareBlock class="ml-8 w-50" id="customerList" :colorType="1">
+        <SquareBlock
+          class="ml-8 w-50"
+          id="customerList"
+          @click="gotoCostomerList()"
+        >
           <template v-slot:body> 顧客一覧 </template>
         </SquareBlock>
       </div>
@@ -60,6 +64,9 @@ export default {
     },
     gotoCostomerRegistration() {
       this.$router.push("/costomerRegistration");
+    },
+    gotoCostomerList() {
+      this.$router.push("/costomerList");
     },
     getcurrentTime() {
       this.currentTime = this.formatDate(new Date());

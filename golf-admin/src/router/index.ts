@@ -3,6 +3,7 @@ import AdminTop from "../views/AdminTop.vue";
 import DayReserve from "../views/DayReserve.vue";
 import UserInfo from "../views/UserInfo.vue";
 import CostomerRegistration from "../views/CostomerRegistration.vue";
+import CostomerList from "../views/CostomerList.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -24,6 +25,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/costomerRegistration",
     name: "CostomerRegistration",
     component: CostomerRegistration,
+  },
+  {
+    path: "/costomerList",
+    name: "CostomerList",
+    component: CostomerList,
   },
   {
     path: "/about",
