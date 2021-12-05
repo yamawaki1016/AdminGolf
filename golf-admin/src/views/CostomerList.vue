@@ -1,6 +1,81 @@
 <template>
   <div class="costomer-list">
     <div class="costomer-list-title">顧客一覧画面</div>
+    <div class="search">
+      <div class="search-title">絞り込み検索</div>
+      <div class="search-conditions">
+        <div class="flex">
+          <div class="search-conditions-title">顧客ID/名前</div>
+          <div>
+            <input type="text" maxlength="20" v-model="searchConditions.text" />
+          </div>
+        </div>
+        <div class="flex">
+          <div class="search-conditions-title">性別</div>
+          <div>
+            <input
+              type="checkbox"
+              id="man"
+              name="gender"
+              value="男性"
+              v-model="searchConditions.gender.M"
+              checked
+            />
+            <label for="man">男性</label>
+            <input
+              type="checkbox"
+              id="woman"
+              name="gender"
+              value="女性"
+              v-model="searchConditions.gender.F"
+              checked
+            />
+            <label for="woman">女性</label>
+          </div>
+        </div>
+        <div class="flex">
+          <div class="search-conditions-title">顧客ステータス</div>
+          <div>
+            <input
+              type="checkbox"
+              id="menber"
+              name="status"
+              value="メンバー"
+              v-model="searchConditions.status.menber"
+              checked
+            />
+            <label for="menber">メンバー</label>
+            <input
+              type="checkbox"
+              id="visitor"
+              name="status"
+              value="ビジター"
+              v-model="searchConditions.status.visitor"
+              checked
+            />
+            <label for="visitor">ビジター</label>
+            <input
+              type="checkbox"
+              id="junior"
+              name="status"
+              value="ジュニア"
+              v-model="searchConditions.status.junior"
+              checked
+            />
+            <label for="junior">ジュニア</label>
+            <input
+              type="checkbox"
+              id="general"
+              name="status"
+              value="一般"
+              v-model="searchConditions.status.general"
+              checked
+            />
+            <label for="general">一般</label>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="costomer-content">
       <div v-if="isNoCostomerListFlg">顧客が１件も登録されていません</div>
       <div v-else class="flex flex-column">
@@ -13,7 +88,7 @@
         </div>
         <div
           class="w-100 flex-center costomer-info"
-          v-for="costomerInfo in costomerList"
+          v-for="costomerInfo in filterCostomerList"
           :key="costomerInfo.userId"
           @click="selectCostomer(costomerInfo)"
         >
@@ -137,21 +212,9 @@
       <template v-slot:footer>
         <div class="border-t mb-16" />
         <div class="table mg-auto mt-32">
-          <SquareBotton
-            class="cancel-botton"
-            title="キャンセル"
-            @click-btn="cancelBtn()"
-          />
-          <SquareBotton
-            class="delete-botton"
-            title="削除"
-            @click-btn="deleteCostomer()"
-          />
-          <SquareBotton
-            class="update-botton"
-            title="更新"
-            @click-btn="enterUpdateCostomer()"
-          />
+          <SquareBotton title="キャンセル" @click-btn="cancelBtn()" />
+          <SquareBotton title="削除" @click-btn="deleteCostomer()" />
+          <SquareBotton title="更新" @click-btn="enterUpdateCostomer()" />
         </div>
       </template>
     </Modal>
@@ -339,15 +402,10 @@
         <div class="errorMsg">{{ errorMsg }}</div>
         <div class="table mg-auto mt-32">
           <SquareBotton
-            class="update-botton"
             title="キャンセル"
             @click-btn="updateCostomerCancel()"
           />
-          <SquareBotton
-            class="update-botton"
-            title="更新"
-            @click-btn="updateCostomer()"
-          />
+          <SquareBotton title="更新" @click-btn="updateCostomer()" />
         </div>
       </template>
     </Modal>
@@ -362,11 +420,7 @@
       <template v-slot:footer>
         <div class="border-t mb-16" />
         <div class="table mg-auto mt-32">
-          <SquareBotton
-            class="cancel-ok-botton"
-            title="OK"
-            @click-btn="cancelOkBtn()"
-          />
+          <SquareBotton title="OK" @click-btn="cancelOkBtn()" />
         </div>
       </template>
     </Modal>
@@ -381,11 +435,7 @@
       <template v-slot:footer>
         <div class="border-t mb-16" />
         <div class="table mg-auto mt-32">
-          <SquareBotton
-            class="update-ok-botton"
-            title="OK"
-            @click-btn="updateOkBtn()"
-          />
+          <SquareBotton title="OK" @click-btn="updateOkBtn()" />
         </div>
       </template>
     </Modal>
@@ -409,6 +459,19 @@ export default {
       selectedCostomerInfo: null,
       updatedCostomerInfo: null,
       errorMsg: null,
+      searchConditions: {
+        text: null,
+        gender: {
+          M: true,
+          F: true,
+        },
+        status: {
+          menber: true,
+          visitor: true,
+          junior: true,
+          general: true,
+        },
+      },
     };
   },
   components: { Modal, SquareBotton },
@@ -421,6 +484,58 @@ export default {
      */
     isNoCostomerListFlg() {
       return this.costomerList.length > 0 ? false : true;
+    },
+    /**
+     * 顧客リストから検索した結果
+     */
+    filterCostomerList() {
+      // 検索条件
+      const searchText = this.searchConditions.text;
+      const M = this.searchConditions.gender.M;
+      const F = this.searchConditions.gender.F;
+      const member = this.searchConditions.status.menber;
+      const visitor = this.searchConditions.status.visitor;
+      const junior = this.searchConditions.status.junior;
+      const general = this.searchConditions.status.general;
+
+      // 検索対象
+      const costomerList = _.cloneDeep(this.costomerList);
+
+      // 検索
+      const filterCostomerList = costomerList
+        // 顧客ID・氏名の文字列検索(部分一致)
+        .filter(function (item) {
+          // 入力がない場合は全件表示
+          return (
+            item["userId"].indexOf(searchText) > -1 ||
+            item["firstName"].indexOf(searchText) > -1 ||
+            item["lastName"].indexOf(searchText) > -1 ||
+            searchText === "" ||
+            searchText == null
+          );
+        })
+        // 性別検索
+        .filter(function (item) {
+          let resultM = false;
+          let resultF = false;
+          if (M) resultM = item["gender"] == "男性";
+          if (F) resultF = item["gender"] == "女性";
+          return resultM || resultF;
+        })
+        // 顧客ステータス検索
+        .filter(function (item) {
+          let resultMenber = false;
+          let resultVisitor = false;
+          let resultJunior = false;
+          let resultGeneral = false;
+          if (member) resultMenber = item["status"] == "メンバー";
+          if (visitor) resultVisitor = item["status"] == "ビジター";
+          if (junior) resultJunior = item["status"] == "ジュニア";
+          if (general) resultGeneral = item["status"] == "一般";
+          return resultMenber || resultVisitor || resultJunior || resultGeneral;
+        });
+
+      return filterCostomerList;
     },
   },
   methods: {
@@ -606,5 +721,13 @@ export default {
 }
 .errorMsg {
   color: red;
+}
+.search {
+  background-color: rgb(221, 221, 221);
+  margin: 0 32px;
+  text-align: left;
+}
+.search-conditions-title {
+  width: 160px;
 }
 </style>
