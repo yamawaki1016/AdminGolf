@@ -305,7 +305,6 @@ export default {
      */
     checkForm() {
       let errMsgList = [];
-      console.log(this.firstName);
       if (
         this.firstName &&
         this.lastName &&
@@ -370,13 +369,12 @@ export default {
     registrationOKBtn() {
       const success = () => {
         // 登録完了しましたポップアップ
-        console.log("登録完了しました");
         this.modalFlg = false;
         this.modalRegistrationCompleteFlg = true;
       };
       const error = () => {
         // 登録失敗しましたポップアップ
-        console.log("登録失敗しました");
+        console.log("登録失敗");
       };
       // 顧客登録APIを実行（仮）
       this.$store.dispatch("createCostomer", {

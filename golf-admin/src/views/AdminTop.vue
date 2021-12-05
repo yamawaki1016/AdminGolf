@@ -1,8 +1,16 @@
 <template>
   <div class="admin-top">
     <div class="topTimer">{{ currentTime }}</div>
+    <div class="debug">
+      <div @click="degugSetCostomer()">デバッグ用顧客データ登録</div>
+    </div>
     <div class="reservation mb-16">
-      <SquareBlock class="mr-8" id="today" @click="gotoDayReserve()">
+      <SquareBlock
+        class="mr-8"
+        id="today"
+        @click="gotoDayReserve()"
+        :colorType="1"
+      >
         <template v-slot:body> 本日の予約 </template>
       </SquareBlock>
       <SquareBlock class="ml-8" id="weekly" :colorType="1">
@@ -56,6 +64,9 @@ export default {
     let timeID = setInterval(this.getcurrentTime, 1000);
   },
   methods: {
+    degugSetCostomer() {
+      this.$store.dispatch("debugSetCostomer");
+    },
     gotoDayReserve() {
       this.$router.push("/dayReserve");
     },
