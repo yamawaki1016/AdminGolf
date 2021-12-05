@@ -2,15 +2,14 @@
   <div class="costomer-list">
     <div class="costomer-list-title">顧客一覧画面</div>
     <div class="search">
-      <div class="search-title">絞り込み検索</div>
       <div class="search-conditions">
-        <div class="flex">
+        <div class="search-conditions-content">
           <div class="search-conditions-title">顧客ID/名前</div>
           <div>
             <input type="text" maxlength="20" v-model="searchConditions.text" />
           </div>
         </div>
-        <div class="flex">
+        <div class="search-conditions-content">
           <div class="search-conditions-title">性別</div>
           <div>
             <input
@@ -33,7 +32,7 @@
             <label for="woman">女性</label>
           </div>
         </div>
-        <div class="flex">
+        <div class="search-conditions-content">
           <div class="search-conditions-title">顧客ステータス</div>
           <div>
             <input
@@ -724,8 +723,16 @@ export default {
 }
 .search {
   background-color: rgb(221, 221, 221);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.45);
   margin: 0 32px;
+  padding: 16px;
   text-align: left;
+  border-radius: 20px;
+}
+.search-conditions-content {
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
 }
 .search-conditions-title {
   width: 160px;
