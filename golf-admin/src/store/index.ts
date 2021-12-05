@@ -56,13 +56,45 @@ export default createStore({
       const costomerList = localStorage.getItem(
         LOCAL_STORAGE_KEYS.costomerList
       );
-      let parsedCostomerList;
       if (costomerList) {
         // 取得できた場合のみパース
-        parsedCostomerList = JSON.parse(costomerList);
+        const parsedCostomerList = JSON.parse(costomerList);
         success(parsedCostomerList);
       } else {
         // 取得できない場合は作成
+        error();
+      }
+    },
+    /**
+     * 顧客情報更新
+     * @param param0
+     * @param param1
+     */
+    updateCostomerInfo({ state }, { success, error, costomerInfo }) {
+      // TODO: 今後APIに処理を置き換え
+      // ローカルストレージから最新の顧客リストを取得
+      const costomerList = localStorage.getItem(
+        LOCAL_STORAGE_KEYS.costomerList
+      );
+      if (costomerList) {
+        // 取得できた場合のみパース
+        const parsedCostomerList = JSON.parse(costomerList);
+        // 顧客IDの一致するユーザーを更新
+        const updatedCostomerList = parsedCostomerList.map((record: any) => {
+          if (record.userId == costomerInfo.userId) {
+            record = costomerInfo;
+          }
+          return record;
+        });
+        // ローカルストレージ更新
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.costomerList,
+          JSON.stringify(updatedCostomerList)
+        );
+        success();
+      } else {
+        // 取得できない場合は作成
+        console.log("取得エラー");
         error();
       }
     },
@@ -72,26 +104,25 @@ export default createStore({
       const costomerList = localStorage.getItem(
         LOCAL_STORAGE_KEYS.costomerList
       );
-      let parsedCostomerList;
       if (costomerList) {
         // 取得できた場合のみパース
-        parsedCostomerList = JSON.parse(costomerList);
+        const parsedCostomerList = JSON.parse(costomerList);
+        // 顧客リストから該当の情報を削除
+        const filterCostomerList = parsedCostomerList.filter((record: any) => {
+          if (record.userId != costomerInfo.userId) {
+            return record;
+          }
+        });
+        // ローカルストレージ更新
+        localStorage.setItem(
+          LOCAL_STORAGE_KEYS.costomerList,
+          JSON.stringify(filterCostomerList)
+        );
+        success();
       } else {
-        // 取得できない場合は作成
-        parsedCostomerList = [];
+        // 取得できない場合はerror
+        error();
       }
-      // 顧客リストから該当の情報を削除
-      const filterCostomerList = parsedCostomerList.filter((record: any) => {
-        if (record.userId != costomerInfo.userId) {
-          return record;
-        }
-      });
-      // ローカルストレージ更新
-      localStorage.setItem(
-        LOCAL_STORAGE_KEYS.costomerList,
-        JSON.stringify(filterCostomerList)
-      );
-      success();
     },
     debugSetCostomer({ state }) {
       // TODO: 今後APIに処理を置き換え
