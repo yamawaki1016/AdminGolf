@@ -1,11 +1,11 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import AdminTop from "../views/AdminTop.vue";
 import DayReserve from "../views/DayReserve.vue";
 import UserInfo from "../views/UserInfo.vue";
 import CostomerRegistration from "../views/CostomerRegistration.vue";
 import CostomerList from "../views/CostomerList.vue";
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: "/",
     name: "AdminTop",

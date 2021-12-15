@@ -61,7 +61,7 @@ export default {
     this.currentTime = this.formatDate(new Date());
   },
   mounted: function () {
-    let timeID = setInterval(this.getcurrentTime, 1000);
+    setInterval(this.getcurrentTime, 1000);
   },
   methods: {
     degugSetCostomer() {

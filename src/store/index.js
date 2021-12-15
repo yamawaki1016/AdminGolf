@@ -17,7 +17,7 @@ export default createStore({
      * @param success 成功時処理
      * @param error 失敗時処理
      */
-    createCostomer({ state }, { costomerInfo, success, error }) {
+    createCostomer(state, { costomerInfo, success }) {
       // TODO: 今後APIに処理を置き換え
       // ユーザーIDと作成日時を追加
       const id = new Date().getTime().toString();
@@ -50,7 +50,8 @@ export default createStore({
      * @param param0
      * @param param1
      */
-    getCostomerList({ state }, { success, error }) {
+    getCostomerList(state, { success, error }) {
+      // console.log(hoge);
       // TODO: 今後APIに処理を置き換え
       // ローカルストレージから最新の顧客リストを取得
       const costomerList = localStorage.getItem(
@@ -70,7 +71,7 @@ export default createStore({
      * @param param0
      * @param param1
      */
-    updateCostomerInfo({ state }, { success, error, costomerInfo }) {
+    updateCostomerInfo(state, { success, error, costomerInfo }) {
       // TODO: 今後APIに処理を置き換え
       // ローカルストレージから最新の顧客リストを取得
       const costomerList = localStorage.getItem(
@@ -80,7 +81,7 @@ export default createStore({
         // 取得できた場合のみパース
         const parsedCostomerList = JSON.parse(costomerList);
         // 顧客IDの一致するユーザーを更新
-        const updatedCostomerList = parsedCostomerList.map((record: any) => {
+        const updatedCostomerList = parsedCostomerList.map((record) => {
           if (record.userId == costomerInfo.userId) {
             record = costomerInfo;
           }
@@ -98,7 +99,7 @@ export default createStore({
         error();
       }
     },
-    deleteCostomer({ state }, { success, error, costomerInfo }) {
+    deleteCostomer(state, { success, error, costomerInfo }) {
       // TODO: 今後APIに処理を置き換え
       // ローカルストレージから最新の顧客リストを取得
       const costomerList = localStorage.getItem(
@@ -108,7 +109,7 @@ export default createStore({
         // 取得できた場合のみパース
         const parsedCostomerList = JSON.parse(costomerList);
         // 顧客リストから該当の情報を削除
-        const filterCostomerList = parsedCostomerList.filter((record: any) => {
+        const filterCostomerList = parsedCostomerList.filter((record) => {
           if (record.userId != costomerInfo.userId) {
             return record;
           }
@@ -124,7 +125,7 @@ export default createStore({
         error();
       }
     },
-    debugSetCostomer({ state }) {
+    debugSetCostomer() {
       // TODO: 今後APIに処理を置き換え
       // ローカルストレージから既存の顧客リストを削除
       localStorage.removeItem(LOCAL_STORAGE_KEYS.costomerList);
