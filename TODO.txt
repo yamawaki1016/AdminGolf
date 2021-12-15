@@ -1,0 +1,9 @@
+■TODO
+
+＜環境面＞
+・router/store..のファイルをts→jsに置換
+・eslintのwarningを修正
+　→おそらくtypeScript用のチェックが走っている
+
+＜実装面＞
+・API、DBの実行環境が整い次第、ローカルストレージ対応から置き換える
