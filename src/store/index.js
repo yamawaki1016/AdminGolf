@@ -21,13 +21,19 @@ export default createStore({
      * @param error 失敗時処理
      */
     async createCostomer(state, { costomerInfo, success, error }) {
-      await api.post("/customer", { body: costomerInfo }).then((res) => {
-        if (res.data.statusCode == 200) {
-          success();
-        } else {
+      await api
+        .post("/customer", { body: costomerInfo })
+        .then((res) => {
+          if (res.data.statusCode == 200) {
+            success();
+          } else {
+            error();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
           error();
-        }
-      });
+        });
     },
     /**
      * 顧客一覧取得
@@ -39,13 +45,18 @@ export default createStore({
         url: "customer",
         method: "get",
         params: null,
-      }).then((res) => {
-        if (res.data.statusCode == 200) {
-          success(res.data.body);
-        } else {
+      })
+        .then((res) => {
+          if (res.data.statusCode == 200) {
+            success(res.data.body);
+          } else {
+            error();
+          }
+        })
+        .catch((e) => {
+          console.log(e);
           error();
-        }
-      });
+        });
     },
     /**
      * 顧客情報更新
@@ -80,31 +91,24 @@ export default createStore({
         error();
       }
     },
-    deleteCostomer(state, { success, error, costomerInfo }) {
-      // TODO: 今後APIに処理を置き換え
-      // ローカルストレージから最新の顧客リストを取得
-      const costomerList = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.costomerList
-      );
-      if (costomerList) {
-        // 取得できた場合のみパース
-        const parsedCostomerList = JSON.parse(costomerList);
-        // 顧客リストから該当の情報を削除
-        const filterCostomerList = parsedCostomerList.filter((record) => {
-          if (record.userId != costomerInfo.userId) {
-            return record;
+    async deleteCostomer(state, { success, error, costomerInfo }) {
+      const reqBody = { userId: costomerInfo.userId };
+      await api({
+        url: "customer",
+        method: "delete",
+        data: { body: reqBody },
+      })
+        .then((res) => {
+          if (res.data.statusCode == 200) {
+            success();
+          } else {
+            error();
           }
+        })
+        .catch((e) => {
+          console.log(e);
+          error();
         });
-        // ローカルストレージ更新
-        localStorage.setItem(
-          LOCAL_STORAGE_KEYS.costomerList,
-          JSON.stringify(filterCostomerList)
-        );
-        success();
-      } else {
-        // 取得できない場合はerror
-        error();
-      }
     },
   },
   modules: {},

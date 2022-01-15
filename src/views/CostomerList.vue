@@ -543,7 +543,7 @@ export default {
       this.modalSelectedCostomerFlg = true;
     },
     dateFormat(date) {
-      return moment(date).format("YYYY-MM-DD");
+      return moment(date, "MM/DD/YYYY").format("YYYY-MM-DD");
     },
     cancelBtn() {
       this.modalSelectedCostomerFlg = false;
