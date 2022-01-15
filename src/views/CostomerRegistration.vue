@@ -378,7 +378,6 @@ export default {
         // 登録失敗しましたポップアップ
         console.log("登録失敗");
       };
-      // 顧客登録APIを実行（仮）
       this.$store.dispatch("createCostomer", {
         costomerInfo: this.costomerInfo,
         success: success,

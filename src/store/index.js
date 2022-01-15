@@ -20,33 +20,14 @@ export default createStore({
      * @param success 成功時処理
      * @param error 失敗時処理
      */
-    createCostomer(state, { costomerInfo, success }) {
-      // TODO: 今後APIに処理を置き換え
-      // ユーザーIDと作成日時を追加
-      const id = new Date().getTime().toString();
-      costomerInfo.userId = id;
-      costomerInfo.createdAt = moment().format();
-
-      // ローカルストレージから最新の顧客リストを取得
-      const costomerList = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.costomerList
-      );
-      let parsedCostomerList;
-      if (costomerList) {
-        // 取得できた場合のみパース
-        parsedCostomerList = JSON.parse(costomerList);
-      } else {
-        // 取得できない場合は作成
-        parsedCostomerList = [];
-      }
-      // 顧客リストに新規ユーザーを追加
-      parsedCostomerList.push(costomerInfo);
-      // ローカルストレージ更新
-      localStorage.setItem(
-        LOCAL_STORAGE_KEYS.costomerList,
-        JSON.stringify(parsedCostomerList)
-      );
-      success();
+    async createCostomer(state, { costomerInfo, success, error }) {
+      await api.post("/customer", { body: costomerInfo }).then((res) => {
+        if (res.data.statusCode == 200) {
+          success();
+        } else {
+          error();
+        }
+      });
     },
     /**
      * 顧客一覧取得

@@ -5,7 +5,7 @@ const CUSTOMER_TABLE = "customerTable";
 
 exports.handler = async (event) => {
   try {
-    const body = JSON.parse(event.body);
+    const body = event.body;
     if (validateColumn(body)) {
       return createResponse(400, "Varidate Error");
     }
