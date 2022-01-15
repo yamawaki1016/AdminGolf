@@ -38,36 +38,36 @@
             <input
               type="checkbox"
               id="menber"
-              name="status"
+              name="customerStatus"
               value="メンバー"
-              v-model="searchConditions.status.menber"
+              v-model="searchConditions.customerStatus.menber"
               checked
             />
             <label for="menber">メンバー</label>
             <input
               type="checkbox"
               id="visitor"
-              name="status"
+              name="customerStatus"
               value="ビジター"
-              v-model="searchConditions.status.visitor"
+              v-model="searchConditions.customerStatus.visitor"
               checked
             />
             <label for="visitor">ビジター</label>
             <input
               type="checkbox"
               id="junior"
-              name="status"
+              name="customerStatus"
               value="ジュニア"
-              v-model="searchConditions.status.junior"
+              v-model="searchConditions.customerStatus.junior"
               checked
             />
             <label for="junior">ジュニア</label>
             <input
               type="checkbox"
               id="general"
-              name="status"
+              name="customerStatus"
               value="一般"
-              v-model="searchConditions.status.general"
+              v-model="searchConditions.customerStatus.general"
               checked
             />
             <label for="general">一般</label>
@@ -104,7 +104,7 @@
             {{ costomerInfo.gender }}
           </div>
           <div class="list-colum costomer-info-colum">
-            {{ costomerInfo.status }}
+            {{ costomerInfo.customerStatus }}
           </div>
         </div>
       </div>
@@ -166,10 +166,10 @@
             </div>
           </div>
           <!-- 顧客ステータス -->
-          <div class="form-row" id="status">
+          <div class="form-row" id="customerStatus">
             <div class="form-cell">顧客ステータス</div>
             <div class="form-cell">
-              {{ selectedCostomerInfo.status ?? "未入力" }}
+              {{ selectedCostomerInfo.customerStatus ?? "未入力" }}
             </div>
           </div>
           <!-- 保護者情報（ジュニア選択時のみ） -->
@@ -203,7 +203,7 @@
           <div class="form-row" id="other-info">
             <div class="form-cell">登録日付</div>
             <div class="form-cell">
-              {{ dateFormat(selectedCostomerInfo.createAt) }}
+              {{ dateFormat(selectedCostomerInfo.createdAt) }}
             </div>
           </div>
         </div>
@@ -314,25 +314,25 @@
             />
           </div>
           <!-- 顧客ステータス -->
-          <div class="form-row" id="status">
+          <div class="form-row" id="customerStatus">
             <form class="form-cell">顧客ステータス</form>
             <div>
               <input
                 class="form-cell"
                 type="radio"
                 id="menber"
-                name="status"
+                name="customerStatus"
                 value="メンバー"
-                v-model="updatedCostomerInfo.status"
+                v-model="updatedCostomerInfo.customerStatus"
               />
               <label for="menber">メンバー</label>
               <input
                 class="form-cell"
                 type="radio"
                 id="visitor"
-                name="status"
+                name="customerStatus"
                 value="ビジター"
-                v-model="updatedCostomerInfo.status"
+                v-model="updatedCostomerInfo.customerStatus"
               />
               <label for="visitor">ビジター</label>
               <div>
@@ -340,18 +340,18 @@
                   class="form-cell"
                   type="radio"
                   id="junior"
-                  name="status"
+                  name="customerStatus"
                   value="ジュニア"
-                  v-model="updatedCostomerInfo.status"
+                  v-model="updatedCostomerInfo.customerStatus"
                 />
                 <label for="junior">ジュニア</label>
                 <input
                   class="form-cell"
                   type="radio"
                   id="general"
-                  name="status"
+                  name="customerStatus"
                   value="一般"
-                  v-model="updatedCostomerInfo.status"
+                  v-model="updatedCostomerInfo.customerStatus"
                 />
                 <label for="general">一般</label>
               </div>
@@ -464,7 +464,7 @@ export default {
           M: true,
           F: true,
         },
-        status: {
+        customerStatus: {
           menber: true,
           visitor: true,
           junior: true,
@@ -492,10 +492,10 @@ export default {
       const searchText = this.searchConditions.text;
       const M = this.searchConditions.gender.M;
       const F = this.searchConditions.gender.F;
-      const member = this.searchConditions.status.menber;
-      const visitor = this.searchConditions.status.visitor;
-      const junior = this.searchConditions.status.junior;
-      const general = this.searchConditions.status.general;
+      const member = this.searchConditions.customerStatus.menber;
+      const visitor = this.searchConditions.customerStatus.visitor;
+      const junior = this.searchConditions.customerStatus.junior;
+      const general = this.searchConditions.customerStatus.general;
 
       // 検索対象
       const costomerList = _.cloneDeep(this.costomerList);
@@ -527,10 +527,10 @@ export default {
           let resultVisitor = false;
           let resultJunior = false;
           let resultGeneral = false;
-          if (member) resultMenber = item["status"] == "メンバー";
-          if (visitor) resultVisitor = item["status"] == "ビジター";
-          if (junior) resultJunior = item["status"] == "ジュニア";
-          if (general) resultGeneral = item["status"] == "一般";
+          if (member) resultMenber = item["customerStatus"] == "メンバー";
+          if (visitor) resultVisitor = item["customerStatus"] == "ビジター";
+          if (junior) resultJunior = item["customerStatus"] == "ジュニア";
+          if (general) resultGeneral = item["customerStatus"] == "一般";
           return resultMenber || resultVisitor || resultJunior || resultGeneral;
         });
 
@@ -588,7 +588,7 @@ export default {
           email: this.updatedCostomerInfo.email
             ? this.updatedCostomerInfo.email
             : null,
-          status: this.updatedCostomerInfo.status,
+          customerStatus: this.updatedCostomerInfo.customerStatus,
           score: this.updatedCostomerInfo.score
             ? this.updatedCostomerInfo.score
             : null,
@@ -634,7 +634,7 @@ export default {
         this.updatedCostomerInfo.lastName &&
         this.updatedCostomerInfo.gender &&
         this.updatedCostomerInfo.phoneNumber &&
-        this.updatedCostomerInfo.status
+        this.updatedCostomerInfo.customerStatus
       ) {
         this.errorMsg = null;
         return true;
@@ -652,7 +652,7 @@ export default {
       if (!this.updatedCostomerInfo.phoneNumber) {
         errMsgList.push("電話番号");
       }
-      if (!this.updatedCostomerInfo.status) {
+      if (!this.updatedCostomerInfo.customerStatus) {
         errMsgList.push("顧客ステータス");
       }
 

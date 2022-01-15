@@ -1,9 +1,5 @@
 <template>
   <div class="admin-top">
-    <div class="topTimer">{{ currentTime }}</div>
-    <div class="debug">
-      <div @click="degugSetCostomer()">デバッグ用顧客データ登録</div>
-    </div>
     <div class="reservation mb-16">
       <SquareBlock
         class="mr-8"
@@ -52,17 +48,9 @@ export default {
   name: "AdminTop",
   components: { SquareBlock },
   data() {
-    return {
-      currentTime: "",
-    };
+    return {};
   },
   mixins: [util],
-  created: function () {
-    this.currentTime = this.formatDate(new Date());
-  },
-  mounted: function () {
-    setInterval(this.getcurrentTime, 1000);
-  },
   methods: {
     degugSetCostomer() {
       this.$store.dispatch("debugSetCostomer");
@@ -78,9 +66,6 @@ export default {
     },
     gotoCostomerList() {
       this.$router.push("/costomerList");
-    },
-    getcurrentTime() {
-      this.currentTime = this.formatDate(new Date());
     },
     /**
      * Date -> yyyy/mm/dd hh:mmに変換

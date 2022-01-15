@@ -77,25 +77,25 @@
         <input class="form-cell" type="email" maxlength="50" v-model="email" />
       </div>
       <!-- 顧客ステータス -->
-      <div class="form-row" id="status">
+      <div class="form-row" id="customerStatus">
         <form class="form-cell">顧客ステータス</form>
         <div>
           <input
             class="form-cell"
             type="radio"
             id="menber"
-            name="status"
+            name="customerStatus"
             value="メンバー"
-            v-model="status"
+            v-model="customerStatus"
           />
           <label for="menber">メンバー</label>
           <input
             class="form-cell"
             type="radio"
             id="visitor"
-            name="status"
+            name="customerStatus"
             value="ビジター"
-            v-model="status"
+            v-model="customerStatus"
           />
           <label for="visitor">ビジター</label>
           <div>
@@ -103,18 +103,18 @@
               class="form-cell"
               type="radio"
               id="junior"
-              name="status"
+              name="customerStatus"
               value="ジュニア"
-              v-model="status"
+              v-model="customerStatus"
             />
             <label for="junior">ジュニア</label>
             <input
               class="form-cell"
               type="radio"
               id="general"
-              name="status"
+              name="customerStatus"
               value="一般"
-              v-model="status"
+              v-model="customerStatus"
             />
             <label for="general">一般</label>
           </div>
@@ -207,9 +207,11 @@
             <div class="form-cell">{{ costomerInfo.email ?? "未入力" }}</div>
           </div>
           <!-- 顧客ステータス -->
-          <div class="form-row" id="status">
+          <div class="form-row" id="customerStatus">
             <div class="form-cell">顧客ステータス</div>
-            <div class="form-cell">{{ costomerInfo.status ?? "未入力" }}</div>
+            <div class="form-cell">
+              {{ costomerInfo.customerStatus ?? "未入力" }}
+            </div>
           </div>
           <!-- 保護者情報（ジュニア選択時のみ） -->
           <div class="form-row" id="parents-first-name">
@@ -285,7 +287,7 @@ export default {
       gender: null,
       phoneNumber: null,
       email: null,
-      status: null,
+      customerStatus: null,
       score: null,
       parentsFirstName: null,
       parentsLastName: null,
@@ -310,7 +312,7 @@ export default {
         this.lastName &&
         this.gender &&
         this.phoneNumber &&
-        this.status
+        this.customerStatus
       ) {
         this.errorMsg = null;
         return true;
@@ -328,7 +330,7 @@ export default {
       if (!this.phoneNumber) {
         errMsgList.push("電話番号");
       }
-      if (!this.status) {
+      if (!this.customerStatus) {
         errMsgList.push("顧客ステータス");
       }
 
@@ -349,7 +351,7 @@ export default {
           gender: this.gender,
           phoneNumber: this.phoneNumber,
           email: this.email ? this.email : null,
-          status: this.status,
+          customerStatus: this.customerStatus,
           score: this.score ? this.score : null,
           parentsFirstName: this.parentsFirstName
             ? this.parentsFirstName

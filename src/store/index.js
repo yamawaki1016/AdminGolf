@@ -1,7 +1,10 @@
 import { createStore } from "vuex";
 import moment from "moment";
-
+import axios from "axios";
 moment.locale("ja");
+var api = axios.create();
+api.defaults.baseURL =
+  "https://qzqwh39h7l.execute-api.ap-northeast-1.amazonaws.com/test/";
 
 const LOCAL_STORAGE_KEYS = {
   costomerList: "costomerList",
@@ -22,7 +25,7 @@ export default createStore({
       // ユーザーIDと作成日時を追加
       const id = new Date().getTime().toString();
       costomerInfo.userId = id;
-      costomerInfo.createAt = moment().format();
+      costomerInfo.createdAt = moment().format();
 
       // ローカルストレージから最新の顧客リストを取得
       const costomerList = localStorage.getItem(
@@ -50,21 +53,18 @@ export default createStore({
      * @param param0
      * @param param1
      */
-    getCostomerList(state, { success, error }) {
-      // console.log(hoge);
-      // TODO: 今後APIに処理を置き換え
-      // ローカルストレージから最新の顧客リストを取得
-      const costomerList = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.costomerList
-      );
-      if (costomerList) {
-        // 取得できた場合のみパース
-        const parsedCostomerList = JSON.parse(costomerList);
-        success(parsedCostomerList);
-      } else {
-        // 取得できない場合は作成
-        error();
-      }
+    async getCostomerList(state, { success, error }) {
+      await api({
+        url: "customer",
+        method: "get",
+        params: null,
+      }).then((res) => {
+        if (res.data.statusCode == 200) {
+          success(res.data.body);
+        } else {
+          error();
+        }
+      });
     },
     /**
      * 顧客情報更新
@@ -124,93 +124,6 @@ export default createStore({
         // 取得できない場合はerror
         error();
       }
-    },
-    debugSetCostomer() {
-      // TODO: 今後APIに処理を置き換え
-      // ローカルストレージから既存の顧客リストを削除
-      localStorage.removeItem(LOCAL_STORAGE_KEYS.costomerList);
-      const setList = [
-        {
-          firstName: "ユーザー",
-          lastName: "001",
-          age: 21,
-          gender: "男性",
-          phoneNumber: "00000000001",
-          email: "user001@gmail.com",
-          status: "メンバー",
-          score: "101",
-          parentsFirstName: "p",
-          parentsLastName: "001",
-          otherInfo: null,
-          userId: "00000001",
-          createAt: "2021-12-05T17:36:16+09:00",
-        },
-        {
-          firstName: "ユーザー",
-          lastName: "002",
-          age: 22,
-          gender: "男性",
-          phoneNumber: "00000000002",
-          email: "user002@gmail.com",
-          status: "メンバー",
-          score: "102",
-          parentsFirstName: "p",
-          parentsLastName: "002",
-          otherInfo: null,
-          userId: "00000002",
-          createAt: "2021-12-05T17:36:16+09:00",
-        },
-        {
-          firstName: "ユーザー",
-          lastName: "003",
-          age: 23,
-          gender: "男性",
-          phoneNumber: "00000000003",
-          email: "user003@gmail.com",
-          status: "メンバー",
-          score: "103",
-          parentsFirstName: "p",
-          parentsLastName: "003",
-          otherInfo: null,
-          userId: "00000003",
-          createAt: "2021-12-05T17:36:16+09:00",
-        },
-        {
-          firstName: "ユーザー",
-          lastName: "004",
-          age: 20,
-          gender: "男性",
-          phoneNumber: "00000000001",
-          email: "user004@gmail.com",
-          status: "メンバー",
-          score: "104",
-          parentsFirstName: "p",
-          parentsLastName: "004",
-          otherInfo: null,
-          userId: "00000004",
-          createAt: "2021-12-05T17:36:16+09:00",
-        },
-        {
-          firstName: "ユーザー",
-          lastName: "005",
-          age: 25,
-          gender: "男性",
-          phoneNumber: "00000000005",
-          email: "user001@gmail.com",
-          status: "メンバー",
-          score: "105",
-          parentsFirstName: "p",
-          parentsLastName: "005",
-          otherInfo: null,
-          userId: "00000005",
-          createAt: "2021-12-05T17:36:16+09:00",
-        },
-      ];
-      // ローカルストレージ更新
-      localStorage.setItem(
-        LOCAL_STORAGE_KEYS.costomerList,
-        JSON.stringify(setList)
-      );
     },
   },
   modules: {},
