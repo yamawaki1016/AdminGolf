@@ -30,5 +30,6 @@ export default {
     rgb(186, 255, 255),
     rgba(169, 189, 255, 0.89)
   );
+  box-shadow: 0 0 5px 0 rgb(0 0 0 / 30%);
 }
 </style>
