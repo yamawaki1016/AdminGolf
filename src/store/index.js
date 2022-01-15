@@ -6,10 +6,6 @@ var api = axios.create();
 api.defaults.baseURL =
   "https://qzqwh39h7l.execute-api.ap-northeast-1.amazonaws.com/test/";
 
-const LOCAL_STORAGE_KEYS = {
-  costomerList: "costomerList",
-};
-
 export default createStore({
   state: {},
   mutations: {},
@@ -63,33 +59,20 @@ export default createStore({
      * @param param0
      * @param param1
      */
-    updateCostomerInfo(state, { success, error, costomerInfo }) {
-      // TODO: 今後APIに処理を置き換え
-      // ローカルストレージから最新の顧客リストを取得
-      const costomerList = localStorage.getItem(
-        LOCAL_STORAGE_KEYS.costomerList
-      );
-      if (costomerList) {
-        // 取得できた場合のみパース
-        const parsedCostomerList = JSON.parse(costomerList);
-        // 顧客IDの一致するユーザーを更新
-        const updatedCostomerList = parsedCostomerList.map((record) => {
-          if (record.userId == costomerInfo.userId) {
-            record = costomerInfo;
+    async updateCostomerInfo(state, { success, error, costomerInfo }) {
+      await api
+        .put("/customer", { body: costomerInfo })
+        .then((res) => {
+          if (res.data.statusCode == 200) {
+            success();
+          } else {
+            error();
           }
-          return record;
+        })
+        .catch((e) => {
+          console.log(e);
+          error();
         });
-        // ローカルストレージ更新
-        localStorage.setItem(
-          LOCAL_STORAGE_KEYS.costomerList,
-          JSON.stringify(updatedCostomerList)
-        );
-        success();
-      } else {
-        // 取得できない場合は作成
-        console.log("取得エラー");
-        error();
-      }
     },
     async deleteCostomer(state, { success, error, costomerInfo }) {
       const reqBody = { userId: costomerInfo.userId };

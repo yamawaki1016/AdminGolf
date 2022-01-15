@@ -173,16 +173,16 @@
             </div>
           </div>
           <!-- 保護者情報（ジュニア選択時のみ） -->
-          <div class="form-row" id="parents-first-name">
+          <div class="form-row" id="parent-first-name">
             <div class="form-cell">保護者氏名（姓）</div>
             <div class="form-cell">
-              {{ selectedCostomerInfo.parentsFirstName ?? "未入力" }}
+              {{ selectedCostomerInfo.parentFirstName ?? "未入力" }}
             </div>
           </div>
-          <div class="form-row" id="parents-last-name">
+          <div class="form-row" id="parent-last-name">
             <div class="form-cell">保護者氏名（名）</div>
             <div class="form-cell">
-              {{ selectedCostomerInfo.parentsLastName ?? "未入力" }}
+              {{ selectedCostomerInfo.parentLastName ?? "未入力" }}
             </div>
           </div>
           <!-- スコア -->
@@ -358,22 +358,22 @@
             </div>
           </div>
           <!-- 保護者情報（ジュニア選択時のみ） -->
-          <div class="form-row" id="parents-first-name">
+          <div class="form-row" id="parent-first-name">
             <form class="form-cell">保護者氏名（姓）</form>
             <input
               class="form-cell"
               type="text"
               maxlength="20"
-              v-model="updatedCostomerInfo.parentsFirstName"
+              v-model="updatedCostomerInfo.parentFirstName"
             />
           </div>
-          <div class="form-row" id="parents-last-name">
+          <div class="form-row" id="parent-last-name">
             <form class="form-cell">保護者氏名（名）</form>
             <input
               class="form-cell"
               type="text"
               maxlength="20"
-              v-model="updatedCostomerInfo.parentsLastName"
+              v-model="updatedCostomerInfo.parentLastName"
             />
           </div>
           <!-- スコア -->
@@ -580,27 +580,25 @@ export default {
           userId: this.updatedCostomerInfo.userId,
           firstName: this.updatedCostomerInfo.firstName,
           lastName: this.updatedCostomerInfo.lastName,
-          age: this.updatedCostomerInfo.age
-            ? this.updatedCostomerInfo.age
-            : null,
+          age: this.updatedCostomerInfo.age ? this.updatedCostomerInfo.age : "",
           gender: this.updatedCostomerInfo.gender,
           phoneNumber: this.updatedCostomerInfo.phoneNumber,
           email: this.updatedCostomerInfo.email
             ? this.updatedCostomerInfo.email
-            : null,
+            : "",
           customerStatus: this.updatedCostomerInfo.customerStatus,
           score: this.updatedCostomerInfo.score
             ? this.updatedCostomerInfo.score
-            : null,
-          parentsFirstName: this.updatedCostomerInfo.parentsFirstName
-            ? this.updatedCostomerInfo.parentsFirstName
-            : null,
-          parentsLastName: this.updatedCostomerInfo.parentsLastName
-            ? this.updatedCostomerInfo.parentsLastName
-            : null,
+            : "",
+          parentFirstName: this.updatedCostomerInfo.parentFirstName
+            ? this.updatedCostomerInfo.parentFirstName
+            : "",
+          parentLastName: this.updatedCostomerInfo.parentLastName
+            ? this.updatedCostomerInfo.parentLastName
+            : "",
           otherInfo: this.updatedCostomerInfo.otherInfo
             ? this.updatedCostomerInfo.otherInfo
-            : null,
+            : "",
         };
 
         const success = () => {
