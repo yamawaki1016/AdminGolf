@@ -1,35 +1,11 @@
 # admin-golf
 
-## Project setup
+## デプロイ手順
 
-```
-npm install
-```
+1. npm run build を実行
 
-### Compiles and hot-reloads for development
+   →dist ファイルが生成される
 
-```
-npm run serve
-```
+2. npm run deploy を実行
 
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
+   →AWS S3 に資材を置き換えてくれる

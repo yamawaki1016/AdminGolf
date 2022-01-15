@@ -7,7 +7,8 @@
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
-    "fmt": "prettier --write **.{vue,js,json,md,html}"
+    "fmt": "prettier --write **.{vue,js,json,md,html}",
+    "deploy": "bash deploy-s3.sh"
   },
   "dependencies": {
     "aws-sdk": "^2.1048.0",
