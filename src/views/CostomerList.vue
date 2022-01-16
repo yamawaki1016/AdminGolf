@@ -275,21 +275,21 @@
               <input
                 class="form-cell"
                 type="radio"
-                id="man"
+                id="update-man"
                 name="gender"
                 value="男性"
                 v-model="updatedCostomerInfo.gender"
               />
-              <label for="man">男性</label>
+              <label for="update-man">男性</label>
               <input
                 class="form-cell"
                 type="radio"
-                id="woman"
+                id="update-woman"
                 name="gender"
                 value="女性"
                 v-model="updatedCostomerInfo.gender"
               />
-              <label for="woman">女性</label>
+              <label for="update-woman">女性</label>
             </div>
           </div>
           <!-- 電話番号（最大11文字） -->
@@ -320,40 +320,40 @@
               <input
                 class="form-cell"
                 type="radio"
-                id="menber"
+                id="update-menber"
                 name="customerStatus"
                 value="メンバー"
                 v-model="updatedCostomerInfo.customerStatus"
               />
-              <label for="menber">メンバー</label>
+              <label for="update-menber">メンバー</label>
               <input
                 class="form-cell"
                 type="radio"
-                id="visitor"
+                id="update-visitor"
                 name="customerStatus"
                 value="ビジター"
                 v-model="updatedCostomerInfo.customerStatus"
               />
-              <label for="visitor">ビジター</label>
+              <label for="update-visitor">ビジター</label>
               <div>
                 <input
                   class="form-cell"
                   type="radio"
-                  id="junior"
+                  id="update-junior"
                   name="customerStatus"
                   value="ジュニア"
                   v-model="updatedCostomerInfo.customerStatus"
                 />
-                <label for="junior">ジュニア</label>
+                <label for="update-junior">ジュニア</label>
                 <input
                   class="form-cell"
                   type="radio"
-                  id="general"
+                  id="update-general"
                   name="customerStatus"
                   value="一般"
                   v-model="updatedCostomerInfo.customerStatus"
                 />
-                <label for="general">一般</label>
+                <label for="update-general">一般</label>
               </div>
             </div>
           </div>
@@ -549,12 +549,15 @@ export default {
       this.modalSelectedCostomerFlg = false;
     },
     deleteCostomer() {
+      const vm = this;
+      this.$store.commit("loadingFlg", true);
       const success = () => {
         this.getCostomerList();
         this.modalSelectedCostomerFlg = false;
         this.modalCanceledFlg = true;
       };
       const error = () => {
+        vm.$store.commit("loadingFlg", false);
         console.log("error");
       };
 
@@ -575,6 +578,8 @@ export default {
     },
     updateCostomer() {
       if (this.checkForm()) {
+        const vm = this;
+        this.$store.commit("loadingFlg", true);
         // 顧客情報を更新（nullに置き換え)
         let costomerInfo = {
           userId: this.updatedCostomerInfo.userId,
@@ -607,6 +612,7 @@ export default {
           this.getCostomerList();
         };
         const error = () => {
+          vm.$store.commit("loadingFlg", false);
           console.log("error");
         };
         this.$store.dispatch("updateCostomerInfo", {
@@ -664,10 +670,14 @@ export default {
      * error():エラーログ
      */
     getCostomerList() {
+      const vm = this;
+      this.$store.commit("loadingFlg", true);
       const getCostomerListSuccess = (costomerList) => {
+        vm.$store.commit("loadingFlg", false);
         this.costomerList = costomerList;
       };
       const getCostomerListError = () => {
+        vm.$store.commit("loadingFlg", false);
         console.log("getError");
       };
       /**

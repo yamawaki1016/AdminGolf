@@ -7,8 +7,14 @@ api.defaults.baseURL =
   "https://qzqwh39h7l.execute-api.ap-northeast-1.amazonaws.com/test/";
 
 export default createStore({
-  state: {},
-  mutations: {},
+  state: {
+    loadingFlg: false,
+  },
+  mutations: {
+    loadingFlg(state, obj) {
+      state.loadingFlg = obj;
+    },
+  },
   actions: {
     /**
      * 顧客情報作成

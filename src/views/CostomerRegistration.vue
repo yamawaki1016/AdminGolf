@@ -369,12 +369,16 @@ export default {
      * 顧客情報登録ポップアップでOK押下
      */
     registrationOKBtn() {
+      const vm = this;
+      this.$store.commit("loadingFlg", true);
       const success = () => {
+        vm.$store.commit("loadingFlg", false);
         // 登録完了しましたポップアップ
         this.modalFlg = false;
         this.modalRegistrationCompleteFlg = true;
       };
       const error = () => {
+        vm.$store.commit("loadingFlg", false);
         // 登録失敗しましたポップアップ
         console.log("登録失敗");
       };

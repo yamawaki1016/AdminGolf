@@ -7,20 +7,27 @@
         <router-view />
       </div>
     </main>
+    <Loading v-if="loadingFlg" class="loading" />
   </div>
 </template>
 <script>
 import Header from "./components/Header.vue";
 import SideBar from "./components/SideBar.vue";
+import Loading from "./components/Loading.vue";
 export default {
   name: "App",
   components: {
     Header,
     SideBar,
+    Loading,
+  },
+  computed: {
+    loadingFlg() {
+      return this.$store.state.loadingFlg;
+    },
   },
 };
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
@@ -33,18 +40,7 @@ export default {
   display: flex;
   flex-flow: column;
   width: 100vw;
-  /* float: left; */
-  /* position: fixed; */
 }
-/* .header {
-  // height: 10vh;
-  // margin-top: 5px;
-  z-index: 100;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-} */
 .main {
   display: flex;
   width: 100vw;
@@ -59,6 +55,13 @@ export default {
   margin-left: 204px;
   position: relative;
   width: 100%;
+}
+.loading {
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  background-color: #0000005c;
 }
 /** ------------------------------------- */
 html,
