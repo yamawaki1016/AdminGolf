@@ -2,7 +2,9 @@
   <div class="">
     <div class="header-info">
       <div class="flex-center">
-        <div class="w-20"><BoxBotton text="戻る" /></div>
+        <div class="w-20">
+          <BoxBotton text="戻る" @click-box-botton="clickBackBotton()" />
+        </div>
         <div class="user-info w-60">
           <span id="user-name">
             {{ costomerInfo.firstName + costomerInfo.lastName }}
@@ -11,8 +13,8 @@
         </div>
         <div class="w-20">
           <BoxBotton
-            text="予約"
-            @click-box-botton="modalLestenRegistrationFlg = true"
+            text="レッスン予約"
+            @click-box-botton="clickReserveBotton()"
           />
         </div>
       </div>
@@ -40,57 +42,47 @@
         </div>
       </div>
     </div>
-    <Modal v-if="modalLestenRegistrationFlg">
-      <template v-slot:header>
-        <div class="bold mb-16 border-b">レッスン登録</div>
-      </template>
-      <template v-slot:body>
-        <div></div>
-      </template>
-      <template v-slot:footer>
-        <div class="table mg-auto mt-32">
-          <SquareBotton
-            class="mr-8"
-            title="キャンセル"
-            @click-btn="modalLestenRegistrationFlg = false"
-          />
-          <SquareBotton
-            class="ml-8"
-            title="登録"
-            @click-btn="modalLestenRegistrationFlg = false"
-          />
-        </div>
-      </template>
-    </Modal>
   </div>
 </template>
 <script>
 import BoxBotton from "@/components/base/BoxBotton.vue";
-import SquareBotton from "@/components/SquareBotton.vue";
-import Modal from "@/components/Modal.vue";
 export default {
   name: "ObserveLestenList",
   data() {
     return {
-      costomerInfo: null,
+      costomerInfo: this.$store.state.selectedCostomerInfo,
       lestenList: [],
-      modalLestenRegistrationFlg: false,
     };
   },
-  components: { BoxBotton, Modal, SquareBotton },
-  created() {
-    const info = this.$store.state.selectedCostomerInfo;
-    this.costomerInfo = info;
-    console.log(this.isObserveLesten);
-
-    // TODO: 予約一覧をメモリに退避
-  },
+  components: { BoxBotton },
+  created() {},
   computed: {
     isObserveLesten() {
       return this.lestenList.length > 0 ? true : false;
     },
   },
-  methods: {},
+  methods: {
+    /**
+     * レッスン予約画面に遷移
+     */
+    clickReserveBotton() {
+      this.$router.push({
+        name: "LestenRegistration",
+        params: {
+          fromPath: this.$route.fullPath,
+          selecedCostomer: true,
+        },
+      });
+    },
+    /**
+     * 顧客一覧画面に遷移
+     */
+    clickBackBotton() {
+      // メモリ解放
+      this.$store.commit("clearSelectedCostomerInfo");
+      this.$router.push("/costomerList");
+    },
+  },
 };
 </script>
 <style scoped>

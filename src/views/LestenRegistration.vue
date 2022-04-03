@@ -8,7 +8,10 @@
           <tr>
             <th class="middle">受講者</th>
             <td class="middle">
-              <span class="select-botton" @click="openSelectCostomerModal()"
+              <span
+                v-if="!isSelectedCostomer"
+                class="select-botton"
+                @click="openSelectCostomerModal()"
                 >選択
               </span>
               <span class="ml-8">
@@ -193,16 +196,24 @@ export default {
   },
   components: { Modal, datetime, TagList, TheSelectBox, BoxBotton },
   created() {
-    this.$store.commit("loadingFlg", true);
-    const vm = this;
-    const success = (costomerList) => {
-      vm.$store.commit("loadingFlg", false);
-      vm.costomerList = costomerList;
-    };
-    this.$store.dispatch("getCostomerList", {
-      success: success,
-      error: success,
-    });
+    if (this.isSelectedCostomer) {
+      // 顧客詳細画面から遷移した場合、保持している顧客情報から必要情報を取得する
+      this.selectLestenInfo.costomer.userId = this.selectedCostomer.userId;
+      this.selectLestenInfo.costomer.fullName =
+        this.selectedCostomer.firstName + this.selectedCostomer.lastName;
+    } else {
+      // 上記以外の画面から遷移した場合、顧客一覧を取得する
+      this.$store.commit("loadingFlg", true);
+      const vm = this;
+      const success = (costomerList) => {
+        vm.$store.commit("loadingFlg", false);
+        vm.costomerList = costomerList;
+      };
+      this.$store.dispatch("getCostomerList", {
+        success: success,
+        error: success,
+      });
+    }
   },
   computed: {
     convertDateFormat() {
@@ -215,6 +226,12 @@ export default {
     getSelectHourMinuteList() {
       return SELECT_HOUR_MINUTE_LIST;
     },
+    selectedCostomer() {
+      return this.$store.state.selectedCostomerInfo;
+    },
+    isSelectedCostomer() {
+      return this.selectedCostomer != null;
+    },
     showSelectCostomer() {
       return this.selectLestenInfo.costomer.fullName != null
         ? this.selectLestenInfo.costomer.fullName
@@ -224,7 +241,15 @@ export default {
   watch: {},
   methods: {
     clickBackBotton() {
-      this.$router.push("/");
+      const fromPath = this.$route.params.fromPath;
+      switch (fromPath) {
+        case "/observeLestenList":
+          this.$router.push(fromPath);
+          break;
+        default:
+          // 上記以外はTop画面に遷移
+          this.$router.push("/");
+      }
     },
     /**
      * レッスンタグの有効無効を切り替える
