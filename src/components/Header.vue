@@ -25,11 +25,8 @@ export default {
   position: sticky;
   top: 0px;
   height: 40px;
-  background: linear-gradient(
-    -45deg,
-    rgb(186, 255, 255),
-    rgba(169, 189, 255, 0.89)
-  );
+  background: linear-gradient(-45deg, rgb(186, 255, 255), rgba(169, 189, 255));
   box-shadow: 0 0 5px 0 rgb(0 0 0 / 30%);
+  z-index: 1000;
 }
 </style>

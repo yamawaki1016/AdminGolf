@@ -266,6 +266,11 @@ li {
   justify-content: center;
   align-items: center;
 }
+.flex-left {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
 .flex-column {
   flex-flow: column;
 }
@@ -286,5 +291,8 @@ li {
 }
 .border-b {
   border-bottom: 1px solid;
+}
+.middle {
+  vertical-align: middle;
 }
 </style>
