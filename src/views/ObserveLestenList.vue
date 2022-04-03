@@ -52,6 +52,7 @@ export default {
     return {
       costomerInfo: this.$store.state.selectedCostomerInfo,
       lestenList: [],
+      clearFlg: true,
     };
   },
   components: { BoxBotton },
@@ -66,11 +67,11 @@ export default {
      * レッスン予約画面に遷移
      */
     clickReserveBotton() {
+      this.clearFlg = false;
       this.$router.push({
         name: "LestenRegistration",
         params: {
           fromPath: this.$route.fullPath,
-          selecedCostomer: true,
         },
       });
     },
@@ -78,10 +79,14 @@ export default {
      * 顧客一覧画面に遷移
      */
     clickBackBotton() {
-      // メモリ解放
-      this.$store.commit("clearSelectedCostomerInfo");
       this.$router.push("/costomerList");
     },
+  },
+  unmounted() {
+    if (this.clearFlg) {
+      // メモリ解放
+      this.$store.commit("clearSelectedCostomerInfo");
+    }
   },
 };
 </script>

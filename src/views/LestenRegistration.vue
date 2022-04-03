@@ -247,7 +247,8 @@ export default {
           this.$router.push(fromPath);
           break;
         default:
-          // 上記以外はTop画面に遷移
+          // 上記以外はメモリを解放しTop画面に遷移
+          this.$store.commit("clearSelectedCostomerInfo");
           this.$router.push("/");
       }
     },

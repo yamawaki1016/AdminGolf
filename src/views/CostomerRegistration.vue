@@ -1,170 +1,235 @@
 <template>
-  <div class="costomer-info">
-    <div class="costomer-info-title">顧客登録画面</div>
-    <div class="border-t mt-32" />
-    <div class="costomer-info-form">
-      <!-- 氏名（姓）（最大20文字） -->
-      <div class="form-row" id="first-name">
-        <form class="form-cell">氏名（姓）</form>
-        <input
-          class="form-cell"
-          type="text"
-          maxlength="20"
-          placeholder="必須"
-          v-model="firstName"
-        />
-      </div>
-      <!-- 氏名（名）（最大20文字） -->
-      <div class="form-row" id="last-name">
-        <form class="form-cell">氏名（名）</form>
-        <input
-          class="form-cell"
-          type="text"
-          maxlength="20"
-          placeholder="必須"
-          v-model="lastName"
-        />
-      </div>
-      <!-- 年齢（0~100） -->
-      <div class="form-row" id="age">
-        <form class="form-cell">年齢</form>
-        <input
-          class="form-cell"
-          type="number"
-          min="0"
-          max="100"
-          v-model="age"
-        />
-      </div>
-      <!-- 性別 -->
-      <div class="form-row" id="gender">
-        <form class="form-cell">性別</form>
-        <div>
-          <input
-            class="form-cell"
-            type="radio"
-            id="man"
-            name="gender"
-            value="男性"
-            v-model="gender"
-          />
-          <label for="man">男性</label>
-          <input
-            class="form-cell"
-            type="radio"
-            id="woman"
-            name="gender"
-            value="女性"
-            v-model="gender"
-          />
-          <label for="woman">女性</label>
-        </div>
-      </div>
-      <!-- 電話番号（最大11文字） -->
-      <div class="form-row" id="phone-number">
-        <form class="form-cell">電話番号</form>
-        <input
-          class="form-cell"
-          type="tel"
-          maxlength="11"
-          v-model="phoneNumber"
-          placeholder="必須"
-        />
-      </div>
-      <!-- メールアドレス（最大50文字） -->
-      <div class="form-row" id="email">
-        <form class="form-cell">メールアドレス</form>
-        <input class="form-cell" type="email" maxlength="50" v-model="email" />
-      </div>
-      <!-- 顧客ステータス -->
-      <div class="form-row" id="customerStatus">
-        <form class="form-cell">顧客ステータス</form>
-        <div>
-          <input
-            class="form-cell"
-            type="radio"
-            id="menber"
-            name="customerStatus"
-            value="メンバー"
-            v-model="customerStatus"
-          />
-          <label for="menber">メンバー</label>
-          <input
-            class="form-cell"
-            type="radio"
-            id="visitor"
-            name="customerStatus"
-            value="ビジター"
-            v-model="customerStatus"
-          />
-          <label for="visitor">ビジター</label>
-          <div>
-            <input
-              class="form-cell"
-              type="radio"
-              id="junior"
-              name="customerStatus"
-              value="ジュニア"
-              v-model="customerStatus"
-            />
-            <label for="junior">ジュニア</label>
-            <input
-              class="form-cell"
-              type="radio"
-              id="general"
-              name="customerStatus"
-              value="一般"
-              v-model="customerStatus"
-            />
-            <label for="general">一般</label>
-          </div>
-        </div>
-      </div>
-      <!-- 保護者情報（ジュニア選択時のみ） -->
-      <div class="form-row" id="parents-first-name">
-        <form class="form-cell">保護者氏名（姓）</form>
-        <input
-          class="form-cell"
-          type="text"
-          maxlength="20"
-          v-model="parentsFirstName"
-        />
-      </div>
-      <div class="form-row" id="parents-last-name">
-        <form class="form-cell">保護者氏名（名）</form>
-        <input
-          class="form-cell"
-          type="text"
-          maxlength="20"
-          v-model="parentsLastName"
-        />
-      </div>
-      <div class="form-row" id="score">
-        <form class="form-cell">平均スコア</form>
-        <input class="form-cell" type="text" v-model="score" />
-      </div>
-      <div class="form-row" id="other-info">
-        <form class="form-cell">その他</form>
-        <textarea
-          class="other-textarea"
-          placeholder="その他備考情報があれば記載"
-          v-model="otherInfo"
-        ></textarea>
-      </div>
+  <div class="lesten-registration">
+    <div class="lesten-registration-title">顧客登録画面</div>
+    <div class="lesten-registration-contents">
+      <table class="form-table">
+        <tbody>
+          <!-- 氏名 -->
+          <tr>
+            <th class="middle">
+              <span>氏名</span>
+              <span class="required-form">【必須】</span>
+            </th>
+            <td class="middle flex-form">
+              <!-- 氏名（姓）（最大20文字） -->
+              <div class="flex-name-form" id="first-name">
+                <input
+                  class="form-cell"
+                  type="text"
+                  maxlength="20"
+                  placeholder="性"
+                  v-model="inputCostomerInfo.firstName"
+                />
+              </div>
+              <!-- 氏名（名）（最大20文字） -->
+              <div class="flex-name-form" id="last-name">
+                <input
+                  class="form-cell"
+                  type="text"
+                  maxlength="20"
+                  placeholder="名"
+                  v-model="inputCostomerInfo.lastName"
+                />
+              </div>
+            </td>
+          </tr>
+          <!-- 年齢（0~100） -->
+          <tr>
+            <th class="middle">
+              <span>年齢</span>
+            </th>
+            <td class="middle">
+              <input
+                class="form-cell"
+                type="number"
+                min="0"
+                max="100"
+                v-model="inputCostomerInfo.age"
+              />
+            </td>
+          </tr>
+          <!-- 性別 -->
+          <tr>
+            <th class="middle">
+              <span>性別</span>
+              <span class="required-form">【必須】</span>
+            </th>
+            <td class="middle">
+              <div>
+                <input
+                  class="form-cell"
+                  type="radio"
+                  id="man"
+                  name="gender"
+                  value="男性"
+                  v-model="inputCostomerInfo.gender"
+                />
+                <label for="man">男性</label>
+                <input
+                  class="form-cell"
+                  type="radio"
+                  id="woman"
+                  name="gender"
+                  value="女性"
+                  v-model="inputCostomerInfo.gender"
+                />
+                <label for="woman">女性</label>
+              </div>
+            </td>
+          </tr>
+          <!-- 電話番号（最大11文字） -->
+          <tr>
+            <th class="middle">
+              <span>電話番号</span>
+              <span class="required-form">【必須】</span>
+            </th>
+            <td class="middle">
+              <div class="form-row" id="phone-number">
+                <input
+                  class="form-cell"
+                  type="tel"
+                  maxlength="11"
+                  v-model="inputCostomerInfo.phoneNumber"
+                  placeholder="必須"
+                />
+              </div>
+            </td>
+          </tr>
+          <!-- メールアドレス（最大50文字） -->
+          <tr>
+            <th class="middle">
+              <span>メールアドレス</span>
+            </th>
+            <td class="middle">
+              <div class="form-row" id="email">
+                <input
+                  class="form-cell"
+                  type="email"
+                  maxlength="50"
+                  placeholder="必須"
+                  v-model="inputCostomerInfo.email"
+                />
+              </div>
+            </td>
+          </tr>
+          <!-- 顧客ステータス -->
+          <tr>
+            <th class="middle">
+              <span>顧客ステータス</span>
+              <span class="required-form">【必須】</span>
+            </th>
+            <td class="middle">
+              <div class="form-row" id="customerStatus">
+                <div>
+                  <input
+                    class="form-cell"
+                    type="radio"
+                    id="menber"
+                    name="customerStatus"
+                    value="メンバー"
+                    v-model="inputCostomerInfo.customerStatus"
+                  />
+                  <label for="menber">メンバー</label>
+                  <input
+                    class="form-cell"
+                    type="radio"
+                    id="visitor"
+                    name="customerStatus"
+                    value="ビジター"
+                    v-model="inputCostomerInfo.customerStatus"
+                  />
+                  <label for="visitor">ビジター</label>
+                  <input
+                    class="form-cell"
+                    type="radio"
+                    id="junior"
+                    name="customerStatus"
+                    value="ジュニア"
+                    v-model="inputCostomerInfo.customerStatus"
+                  />
+                  <label for="junior">ジュニア</label>
+                  <input
+                    class="form-cell"
+                    type="radio"
+                    id="general"
+                    name="customerStatus"
+                    value="一般"
+                    v-model="inputCostomerInfo.customerStatus"
+                  />
+                  <label for="general">一般</label>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <!-- 保護者情報（ジュニア選択時のみ） -->
+          <tr>
+            <th class="middle">
+              <span>保護者氏名</span>
+            </th>
+            <td class="middle">
+              <div class="flex-form">
+                <div class="form-row" id="parents-first-name">
+                  <input
+                    class="form-cell"
+                    type="text"
+                    maxlength="20"
+                    placeholder="性"
+                    v-model="inputCostomerInfo.parentsFirstName"
+                  />
+                </div>
+                <div class="form-row" id="parents-last-name">
+                  <input
+                    class="form-cell"
+                    type="text"
+                    maxlength="20"
+                    placeholder="名"
+                    v-model="inputCostomerInfo.parentsLastName"
+                  />
+                </div>
+              </div>
+            </td>
+          </tr>
+          <!-- 平均スコア -->
+          <tr>
+            <th class="middle">
+              <span>平均スコア</span>
+            </th>
+            <td class="middle">
+              <div class="form-row" id="score">
+                <input
+                  class="form-cell"
+                  type="text"
+                  v-model="inputCostomerInfo.score"
+                />
+              </div>
+            </td>
+          </tr>
+          <!-- その他 -->
+          <tr>
+            <th class="middle">
+              <span>その他</span>
+            </th>
+            <td class="middle">
+              <div class="form-row" id="other-info">
+                <textarea
+                  class="other-textarea"
+                  placeholder="その他備考情報があれば記載"
+                  v-model="inputCostomerInfo.otherInfo"
+                ></textarea>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-    <div class="border-t mt-32" />
     <div class="errorMsg">{{ errorMsg }}</div>
-    <div class="table mg-auto mt-32">
-      <SquareBotton
-        class="cancel-botton"
-        title="Top画面"
-        @click-btn="gotoTop()"
-      />
-      <SquareBotton
-        class="ok-botton"
-        title="登録"
-        @click-btn="registrationBtn()"
-      />
+    <div class="lesten-registration-footer flex-center">
+      <div class="footer-botton">
+        <BoxBotton text="Top画面" @click-box-botton="gotoTop()" />
+      </div>
+      <div class="footer-botton">
+        <BoxBotton text="登録" @click-box-botton="registrationBtn()" />
+      </div>
     </div>
     <Modal v-if="modalFlg">
       <template v-slot:header>
@@ -272,8 +337,24 @@
   </div>
 </template>
 <script>
-import SquareBotton from "@/components/SquareBotton.vue";
 import Modal from "@/components/Modal.vue";
+import BoxBotton from "@/components/base/BoxBotton";
+import SquareBotton from "@/components/SquareBotton.vue";
+
+const DEFAULT_COSTOMER_INFO = {
+  firstName: null,
+  lastName: null,
+  age: null,
+  gender: null,
+  phoneNumber: null,
+  email: null,
+  customerStatus: null,
+  score: null,
+  parentsFirstName: null,
+  parentsLastName: null,
+  otherInfo: null,
+};
+
 export default {
   name: "CostomerRegistration",
   data() {
@@ -281,62 +362,19 @@ export default {
       modalFlg: false,
       modalRegistrationCompleteFlg: false,
       errorMsg: null,
-      firstName: null,
-      lastName: null,
-      age: null,
-      gender: null,
-      phoneNumber: null,
-      email: null,
-      customerStatus: null,
-      score: null,
-      parentsFirstName: null,
-      parentsLastName: null,
-      otherInfo: null,
+      inputCostomerInfo: DEFAULT_COSTOMER_INFO,
       costomerInfo: null,
     };
   },
-  components: { Modal, SquareBotton },
-  computed: {
-    isExistsErrorMsg() {
-      return this.errorMsg != null ? true : false;
-    },
+  components: { BoxBotton, Modal, SquareBotton },
+  created() {
+    this.inputCostomerInfo = DEFAULT_COSTOMER_INFO;
   },
+  computed: {},
+  watch: {},
   methods: {
-    /**
-     * 入力チェック
-     */
-    checkForm() {
-      let errMsgList = [];
-      if (
-        this.firstName &&
-        this.lastName &&
-        this.gender &&
-        this.phoneNumber &&
-        this.customerStatus
-      ) {
-        this.errorMsg = null;
-        return true;
-      }
-
-      if (!this.firstName) {
-        errMsgList.push("氏名(姓)");
-      }
-      if (!this.lastName) {
-        errMsgList.push("氏名(名)");
-      }
-      if (!this.gender) {
-        errMsgList.push("性別");
-      }
-      if (!this.phoneNumber) {
-        errMsgList.push("電話番号");
-      }
-      if (!this.customerStatus) {
-        errMsgList.push("顧客ステータス");
-      }
-
-      this.errorMsg =
-        "必須項目は必ず入力してください。： " + errMsgList.concat(",");
-      return false;
+    gotoTop() {
+      this.$router.push("/");
     },
     /**
      * 入力チェックを行い、問題なければ確認ポップアップ表示
@@ -345,19 +383,27 @@ export default {
       if (this.checkForm()) {
         // 顧客情報を作成
         let costomerInfo = {
-          firstName: this.firstName,
-          lastName: this.lastName,
-          age: this.age ? this.age : null,
-          gender: this.gender,
-          phoneNumber: this.phoneNumber,
-          email: this.email ? this.email : null,
-          customerStatus: this.customerStatus,
-          score: this.score ? this.score : null,
-          parentsFirstName: this.parentsFirstName
-            ? this.parentsFirstName
+          firstName: this.inputCostomerInfo.firstName,
+          lastName: this.inputCostomerInfo.lastName,
+          age: this.inputCostomerInfo.age ? this.inputCostomerInfo.age : null,
+          gender: this.inputCostomerInfo.gender,
+          phoneNumber: this.inputCostomerInfo.phoneNumber,
+          email: this.inputCostomerInfo.email
+            ? this.inputCostomerInfo.email
             : null,
-          parentsLastName: this.parentsLastName ? this.parentsLastName : null,
-          otherInfo: this.otherInfo ? this.otherInfo : null,
+          customerStatus: this.inputCostomerInfo.customerStatus,
+          score: this.inputCostomerInfo.score
+            ? this.inputCostomerInfo.score
+            : null,
+          parentsFirstName: this.inputCostomerInfo.parentsFirstName
+            ? this.inputCostomerInfo.parentsFirstName
+            : null,
+          parentsLastName: this.inputCostomerInfo.parentsLastName
+            ? this.inputCostomerInfo.parentsLastName
+            : null,
+          otherInfo: this.inputCostomerInfo.otherInfo
+            ? this.inputCostomerInfo.otherInfo
+            : null,
         };
         this.costomerInfo = costomerInfo;
 
@@ -365,6 +411,44 @@ export default {
         this.modalFlg = true;
       }
     },
+    /**
+     * 入力チェック
+     */
+    checkForm() {
+      let errMsgList = [];
+      const inputCostomerInfo = this.inputCostomerInfo;
+      if (
+        inputCostomerInfo.firstName &&
+        inputCostomerInfo.lastName &&
+        inputCostomerInfo.gender &&
+        inputCostomerInfo.phoneNumber &&
+        inputCostomerInfo.customerStatus
+      ) {
+        this.errorMsg = null;
+        return true;
+      }
+
+      if (!inputCostomerInfo.firstName) {
+        errMsgList.push("氏名(姓)");
+      }
+      if (!inputCostomerInfo.lastName) {
+        errMsgList.push("氏名(名)");
+      }
+      if (!inputCostomerInfo.gender) {
+        errMsgList.push("性別");
+      }
+      if (!inputCostomerInfo.phoneNumber) {
+        errMsgList.push("電話番号");
+      }
+      if (!inputCostomerInfo.customerStatus) {
+        errMsgList.push("顧客ステータス");
+      }
+
+      this.errorMsg =
+        "必須項目は必ず入力してください。： " + errMsgList.concat(",");
+      return false;
+    },
+
     /**
      * 顧客情報登録ポップアップでOK押下
      */
@@ -392,43 +476,147 @@ export default {
       this.modalFlg = false;
       this.costomerInfo = null;
     },
-    gotoTop() {
-      this.$router.push("/");
-    },
   },
 };
 </script>
 <style scoped>
-.costomer-info {
-  margin: 32px 64px;
+.required-form {
+  color: red;
 }
-.costomer-info-title {
+.flex-form {
+  display: flex;
+  justify-content: left;
+  gap: 10px 20px; /* 余白 */
+  flex-flow: column;
+}
+.flex-name-form {
+  width: 150px;
+}
+.lesten-registration {
+  margin: 32px;
+}
+.lesten-registration-title {
   font-size: 32px;
 }
-.costomer-info-form {
-  margin: 16px auto 0;
-  font-size: 20px;
-  display: table;
+.lesten-registration-contents {
+  margin-top: 16px;
+  text-align: left;
+}
+.lesten-registration-footer {
+  margin: 16px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px 20px; /* 余白 */
+}
+.footer-botton {
+  width: 300px;
+}
+table {
+  border-collapse: collapse;
+}
+p {
+  font-size: 16px;
+  font-weight: bold;
   text-align: center;
-  vertical-align: middle;
+  margin: 60px auto 40px;
 }
-.form-row {
-  display: table-row;
-  margin-bottom: 8px;
-  height: 10px;
+input[type="submit"],
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+select,
+textarea,
+button {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  outline: none;
+  border: none;
 }
-.form-cell {
-  display: table-cell;
+
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+textarea {
+  background: #f8f8f8;
+  display: block;
+  font-size: 16px;
+  padding: 12px 15px;
+  width: 480px;
+  transition: 0.8s;
+  border-radius: 0;
 }
-.other-textarea {
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+  background: #e9f5fb;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+textarea[name="content"] {
+  display: inline-block;
   width: 100%;
-  height: 50px;
+  height: 200px;
 }
-.registrationVerification {
-  margin: 0 auto 16px;
-  display: table;
+input::placeholder,
+textarea::placeholder {
+  color: #ccc;
 }
-.errorMsg {
-  color: red;
+::-webkit-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+::-moz-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+:-ms-input-placeholder {
+  color: #ccc;
+  opacity: 1;
+}
+.form-table {
+  width: 100%;
+}
+.form-table th,
+.form-table td {
+  border-top: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  padding: 20px;
+}
+
+.form-table th {
+  background: #ffecea;
+  padding-left: 50px;
+  position: relative;
+  text-align: left;
+  width: 300px;
+}
+.costomer-card {
+  margin: 2px;
+  background-color: #80808026;
+  width: 200px;
+}
+.costomer-card:hover {
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.15), 0 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+/* 選択ボタン */
+.select-botton {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  border: 1px solid;
+  border-radius: 20px;
+}
+.select-botton:hover {
+  background-color: silver;
+}
+.date-time-form {
+  display: flex;
+  align-items: center;
+  gap: 0px 20px; /* 余白 */
 }
 </style>

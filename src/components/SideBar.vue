@@ -57,22 +57,32 @@ export default {
   },
   methods: {
     gotoTop() {
+      this.clearStoreData();
       this.$router.push("/");
     },
     gotoDayReserve() {
+      this.clearStoreData();
       this.$router.push("/dayReserve");
     },
     gotoUserInfo() {
+      this.clearStoreData();
       this.$router.push("/userInfo");
     },
     gotoCostomerRegistration() {
+      this.clearStoreData();
       this.$router.push("/costomerRegistration");
     },
     gotoCostomerList() {
+      this.clearStoreData();
       this.$router.push("/costomerList");
     },
     gotoLestenRegistration() {
+      this.clearStoreData();
       this.$router.push("/lestenRegistration");
+    },
+    clearStoreData() {
+      console.log("clar");
+      this.$store.commit("clearSelectedCostomerInfo");
     },
   },
 };
