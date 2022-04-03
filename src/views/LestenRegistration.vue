@@ -4,6 +4,7 @@
     <div class="lesten-registration-contents">
       <table class="form-table">
         <tbody>
+          <!-- 受講者 -->
           <tr>
             <th class="middle">受講者</th>
             <td class="middle">
@@ -15,27 +16,41 @@
               </span>
             </td>
           </tr>
+          <!-- 日時 -->
           <tr>
             <th class="middle">日時</th>
-            <td class="middle">
+            <td class="middle date-time-form">
               <datetime
-                class="custom-date-time-picker"
                 format="YYYY/MM/DD"
                 width="300px"
-                v-model="reserveDate"
+                @input="selectDateTime.date = $event"
               ></datetime>
+              <div>
+                <TheSelectBox
+                  :selectBoxList="getSelectHourMinuteList.HOUR"
+                  :boxWidth="'100px'"
+                  @change-select-value="selectDateTime.hour = $event.name"
+                />
+                <TheSelectBox
+                  :selectBoxList="getSelectHourMinuteList.MINUTE"
+                  :boxWidth="'100px'"
+                  @change-select-value="selectDateTime.minute = $event.name"
+                />
+              </div>
             </td>
           </tr>
+          <!-- レッスン場所 -->
           <tr>
             <th class="middle">レッスン場所</th>
             <td class="middle">
               <TheSelectBox
                 :selectBoxList="getLestenSpotList"
                 :boxWidth="'300px'"
-                @change-select-value="hoge($event)"
+                @change-select-value="selectLestenInfo.spot = $event"
               />
             </td>
           </tr>
+          <!-- レッスン内容 -->
           <tr>
             <th class="middle">レッスン内容</th>
             <td class="middle">
@@ -45,19 +60,29 @@
               />
             </td>
           </tr>
+          <!-- 補足情報 -->
           <tr>
-            <th class="middle">備考</th>
+            <th class="middle">補足情報</th>
             <td class="middle">
               <textarea
                 name="content"
                 cols="30"
                 rows="10"
                 placeholder="追記で記載があれば入力"
+                v-model="selectLestenInfo.otherInfo"
               ></textarea>
             </td>
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="lesten-registration-footer flex-center">
+      <div class="footer-botton">
+        <BoxBotton text="戻る" @click-box-botton="clickBackBotton()" />
+      </div>
+      <div class="footer-botton">
+        <BoxBotton text="予約" @click-box-botton="reserveLesten()" />
+      </div>
     </div>
     <!-- 受講者選択ポップアップ -->
     <Modal v-if="modal.selectCostomer">
@@ -83,9 +108,11 @@
 <script>
 import dayjs from "dayjs";
 import datetime from "vuejs-datetimepicker";
+import deepcopy from "deepcopy";
 import TagList from "@/components/TagList";
 import Modal from "@/components/Modal.vue";
 import TheSelectBox from "@/components/base/TheSelectBox";
+import BoxBotton from "@/components/base/BoxBotton";
 
 const LESTEN_SPOT_LIST = [
   { id: 1, name: "福知山東ゴルフクラブ" },
@@ -101,30 +128,76 @@ const LESTEN_TAG_LIST = [
   { name: "サンドウェッジ", id: 5, isAvable: false },
   { name: "ゴルフ理論", id: 6, isAvable: false },
 ];
+const SELECT_HOUR_MINUTE_LIST = {
+  HOUR: [
+    { id: 0, name: "0" },
+    { id: 1, name: "1" },
+    { id: 2, name: "2" },
+    { id: 3, name: "3" },
+    { id: 4, name: "4" },
+    { id: 5, name: "5" },
+    { id: 6, name: "6" },
+    { id: 7, name: "7" },
+    { id: 8, name: "8" },
+    { id: 9, name: "9" },
+    { id: 10, name: "10" },
+    { id: 11, name: "11" },
+    { id: 12, name: "12" },
+    { id: 13, name: "13" },
+    { id: 14, name: "14" },
+    { id: 15, name: "15" },
+    { id: 16, name: "16" },
+    { id: 17, name: "17" },
+    { id: 18, name: "18" },
+    { id: 19, name: "19" },
+    { id: 20, name: "20" },
+    { id: 21, name: "21" },
+    { id: 22, name: "22" },
+    { id: 23, name: "23" },
+  ],
+  MINUTE: [
+    { id: 0, name: "00" },
+    { id: 1, name: "15" },
+    { id: 2, name: "30" },
+    { id: 3, name: "45" },
+  ],
+};
+const DEFAULT_LESTEN_INFO = {
+  costomer: {
+    userId: null,
+    fullName: null,
+  },
+  reserveDate: null,
+  spot: null,
+  lestenTags: [],
+  otherInfo: "",
+};
 
 export default {
   name: "LestenRegistration",
   data() {
     return {
-      reserveDate: null,
       lestenTagList: LESTEN_TAG_LIST,
       selectCostomer: null,
+      selectDateTime: {
+        date: null,
+        hour: null,
+        minute: null,
+      },
       costomerList: [],
+      selectLestenInfo: DEFAULT_LESTEN_INFO,
       modal: {
         selectCostomer: false,
       },
     };
   },
-  components: { Modal, datetime, TagList, TheSelectBox },
+  components: { Modal, datetime, TagList, TheSelectBox, BoxBotton },
   created() {
-    this.reserveDate = new Date();
     this.$store.commit("loadingFlg", true);
     const vm = this;
     const success = (costomerList) => {
       vm.$store.commit("loadingFlg", false);
       vm.costomerList = costomerList;
-      console.log(costomerList);
-      // 登録完了しましたポップアップ
     };
     this.$store.dispatch("getCostomerList", {
       success: success,
@@ -139,14 +212,20 @@ export default {
     getLestenSpotList() {
       return LESTEN_SPOT_LIST;
     },
+    getSelectHourMinuteList() {
+      return SELECT_HOUR_MINUTE_LIST;
+    },
     showSelectCostomer() {
-      return this.selectCostomer != null
-        ? this.selectCostomer.firstName + this.selectCostomer.lastName
+      return this.selectLestenInfo.costomer.fullName != null
+        ? this.selectLestenInfo.costomer.fullName
         : "未選択";
     },
   },
   watch: {},
   methods: {
+    clickBackBotton() {
+      this.$router.push("/");
+    },
     /**
      * レッスンタグの有効無効を切り替える
      * @param {boolean} id 有効/無効
@@ -159,18 +238,59 @@ export default {
         return tag;
       });
     },
+    /**
+     * 選択された顧客情報からidと氏名を取り出してメモリに設定
+     * @param {object} selectCostomer 選択された顧客情報
+     */
     setCostomerName(selectCostomer) {
-      this.selectCostomer = selectCostomer;
-      this.modal.selectCostomer = false;
+      this.selectLestenInfo.costomer.userId = selectCostomer.userId;
+      this.selectLestenInfo.costomer.fullName =
+        selectCostomer.firstName + selectCostomer.lastName;
+
+      // ポップアップを閉じる
+      this.closeSelectCostomerModal();
     },
+    /**
+     * 受講者選択ポップアップを表示
+     */
     openSelectCostomerModal() {
       this.modal.selectCostomer = true;
     },
+    /**
+     * 受講者選択ポップアップを非表示
+     */
     closeSelectCostomerModal() {
       this.modal.selectCostomer = false;
     },
+    /**
+     * レッスンを予約
+     */
+    reserveLesten() {
+      // 有効なレッスンタグに絞り込み
+      const tmpTags = deepcopy(this.lestenTagList);
+      this.selectLestenInfo.lestenTags = tmpTags.filter((tag) => {
+        return tag.isAvable;
+      });
+      // 日付情報を設定
+      this.selectLestenInfo.reserveDate = setDateTime(
+        this.selectDateTime.date,
+        this.selectDateTime.hour,
+        this.selectDateTime.minute
+      );
+      console.log(this.selectLestenInfo);
+    },
   },
 };
+/**
+ * 日付をdayjs型に変換
+ * @param {string} date 日付(YYYY-MM-DD)
+ * @param {string} hour 時
+ * @param {string} minute 分
+ * @returns dayjs型("YYYY-MM-DD HH:mm")
+ */
+function setDateTime(date, hour, minute) {
+  return dayjs(date).hour(hour).minute(minute).format("YYYY-MM-DD HH:mm");
+}
 </script>
 <style scoped>
 .lesten-registration {
@@ -182,6 +302,16 @@ export default {
 .lesten-registration-contents {
   margin-top: 16px;
   text-align: left;
+}
+.lesten-registration-footer {
+  margin: 16px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0px 20px; /* 余白 */
+}
+.footer-botton {
+  width: 300px;
 }
 table {
   border-collapse: collapse;
@@ -278,5 +408,10 @@ textarea::placeholder {
 }
 .select-botton:hover {
   background-color: silver;
+}
+.date-time-form {
+  display: flex;
+  align-items: center;
+  gap: 0px 20px; /* 余白 */
 }
 </style>

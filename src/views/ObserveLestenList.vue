@@ -65,7 +65,7 @@
   </div>
 </template>
 <script>
-import BoxBotton from "@/components/BoxBotton.vue";
+import BoxBotton from "@/components/base/BoxBotton.vue";
 import SquareBotton from "@/components/SquareBotton.vue";
 import Modal from "@/components/Modal.vue";
 export default {

@@ -45,7 +45,6 @@ export default {
 .selectdiv {
   position: relative;
   float: left;
-  min-width: 200px;
 }
 /* IE11 hide native button (thanks Matt!) */
 select::-ms-expand {
