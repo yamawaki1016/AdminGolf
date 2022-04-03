@@ -31,7 +31,11 @@
         </SquareBlock>
       </div>
       <div class="lesten mb-16 ml-8">
-        <SquareBlock class="mr-8 w-50" id="addLesten" :colorType="1">
+        <SquareBlock
+          class="mr-8 w-50"
+          id="addLesten"
+          @click="gotoLestenRegistration()"
+        >
           <template v-slot:body> レッスン新規登録 </template>
         </SquareBlock>
         <SquareBlock class="ml-8 w-50" id="lestenList" :colorType="1">
@@ -66,6 +70,9 @@ export default {
     },
     gotoCostomerList() {
       this.$router.push("/costomerList");
+    },
+    gotoLestenRegistration() {
+      this.$router.push("/lestenRegistration");
     },
     /**
      * Date -> yyyy/mm/dd hh:mmに変換

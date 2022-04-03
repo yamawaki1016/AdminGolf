@@ -210,7 +210,13 @@
       </template>
       <template v-slot:footer>
         <div class="border-t mb-16" />
-        <div class="table mg-auto mt-32">
+        <div class="table mg-auto">
+          <SquareBotton
+            title="レッスン予約"
+            @click-btn="gotoObserveLestenList()"
+          />
+        </div>
+        <div class="table mg-auto mt-16">
           <SquareBotton title="キャンセル" @click-btn="cancelBtn()" />
           <SquareBotton title="削除" @click-btn="deleteCostomer()" />
           <SquareBotton title="更新" @click-btn="enterUpdateCostomer()" />
@@ -687,6 +693,11 @@ export default {
         success: getCostomerListSuccess,
         error: getCostomerListError,
       });
+    },
+    gotoObserveLestenList() {
+      const info = this.selectedCostomerInfo;
+      this.$store.commit("setSelectedCostomerInfo", info);
+      this.$router.push("/observeLestenList");
     },
   },
 };

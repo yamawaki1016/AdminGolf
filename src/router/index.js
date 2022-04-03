@@ -4,6 +4,8 @@ import DayReserve from "../views/DayReserve.vue";
 import UserInfo from "../views/UserInfo.vue";
 import CostomerRegistration from "../views/CostomerRegistration.vue";
 import CostomerList from "../views/CostomerList.vue";
+import ObserveLestenList from "../views/ObserveLestenList.vue";
+import LestenRegistration from "../views/LestenRegistration.vue";
 
 const routes = [
   {
@@ -30,6 +32,16 @@ const routes = [
     path: "/costomerList",
     name: "CostomerList",
     component: CostomerList,
+  },
+  {
+    path: "/observeLestenList",
+    name: "ObserveLestenList",
+    component: ObserveLestenList,
+  },
+  {
+    path: "/lestenRegistration",
+    name: "LestenRegistration",
+    component: LestenRegistration,
   },
   {
     path: "/about",

@@ -9,10 +9,17 @@ api.defaults.baseURL =
 export default createStore({
   state: {
     loadingFlg: false,
+    selectedCostomerInfo: null,
   },
   mutations: {
     loadingFlg(state, obj) {
       state.loadingFlg = obj;
+    },
+    setSelectedCostomerInfo(state, obj) {
+      state.selectedCostomerInfo = obj;
+    },
+    clearSelectedCostomerInfo(state) {
+      state.selectedCostomerInfo = null;
     },
   },
   actions: {
