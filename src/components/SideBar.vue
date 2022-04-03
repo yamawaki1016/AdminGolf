@@ -1,7 +1,7 @@
 <template>
   <div class="side-bar-contents">
     <div class="bold">管理者メニュー</div>
-    <div @click="gotoTop()">トップ画面</div>
+    <div class="bar-contents" @click="gotoTop()">トップ画面</div>
     <div class="bar-block">
       <div class="bar-title">予約</div>
       <div class="bar-contents-list">
@@ -23,7 +23,9 @@
     <div class="bar-block">
       <div class="bar-title">レッスン</div>
       <div class="bar-contents-list">
-        <div class="bar-contents">レッスン新規作成</div>
+        <div class="bar-contents" @click="gotoLestenRegistration()">
+          レッスン新規作成
+        </div>
         <div class="bar-contents">レッスン一覧</div>
       </div>
     </div>
@@ -69,6 +71,9 @@ export default {
     gotoCostomerList() {
       this.$router.push("/costomerList");
     },
+    gotoLestenRegistration() {
+      this.$router.push("/lestenRegistration");
+    },
   },
 };
 </script>
@@ -86,5 +91,9 @@ export default {
 }
 .bar-contents-list {
   margin-left: 16px;
+}
+.bar-contents:hover {
+  box-shadow: 0 5px 5px -5px rgba(0, 0, 0, 0.1), 0 0 5px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
 }
 </style>
