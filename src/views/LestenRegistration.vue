@@ -29,11 +29,11 @@
           <tr>
             <th class="middle">レッスン場所</th>
             <td class="middle">
-              <select name="spot">
-                <template v-for="spot in getLestenSpotList" :key="spot.id">
-                  <option :value="spot.id">{{ spot.name }}</option>
-                </template>
-              </select>
+              <TheSelectBox
+                :selectBoxList="getLestenSpotList"
+                :boxWidth="'300px'"
+                @change-select-value="hoge($event)"
+              />
             </td>
           </tr>
           <tr>
@@ -85,6 +85,7 @@ import dayjs from "dayjs";
 import datetime from "vuejs-datetimepicker";
 import TagList from "@/components/TagList";
 import Modal from "@/components/Modal.vue";
+import TheSelectBox from "@/components/base/TheSelectBox";
 
 const LESTEN_SPOT_LIST = [
   { id: 1, name: "福知山東ゴルフクラブ" },
@@ -114,7 +115,7 @@ export default {
       },
     };
   },
-  components: { Modal, datetime, TagList },
+  components: { Modal, datetime, TagList, TheSelectBox },
   created() {
     this.reserveDate = new Date();
     this.$store.commit("loadingFlg", true);
