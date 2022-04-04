@@ -59,4 +59,15 @@ const router = createRouter({
   routes,
 });
 
+// 初回起動フラグ
+let firstLoad = true;
+
+router.beforeEach((from, to, next) => {
+  // 初回起動時、リロード時は初期ページにリダイレクト
+  if (firstLoad) {
+    firstLoad = false;
+    next("/");
+  }
+  next();
+});
 export default router;
